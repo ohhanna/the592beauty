@@ -4,19 +4,18 @@
     android:layout_height="match_parent"
     android:background="#ffffffff">
 
-
     <ImageView
         android:src="@drawable/personalcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView_q1_1" />
+        android:id="@+id/imageView_q6_1" />
 
     <ImageView
-        android:src="@drawable/q1"
-        android:layout_width="match_parent"
+        android:src="@drawable/q6"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:id="@+id/imageView_q1_2" />
+        android:id="@+id/imageView_q6_2" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -24,52 +23,74 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:text="Yellow Base"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_q1_1" />
-
-        <ImageView
-            android:src="@drawable/q1_yellow"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/imageView_q1_3" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:text="Pink Base"
+            android:text="Bright Tone"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="30dp"
             android:textSize="20dp"
             android:layout_width="164dp"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_q1_2"/>
+            android:id="@+id/radio_q6_1" />
 
         <ImageView
-            android:src="@drawable/q1_pink"
+            android:src="@drawable/q6_brighttone"
             android:layout_width="150dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/imageView_q1_4"/>
+            android:layout_marginTop="5dp"
+            android:id="@+id/imageView_q6_3" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="Soft Tone"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_q6_2"/>
+
+        <ImageView
+            android:src="@drawable/q6_softtone"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/imageView_q6_4"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="Deep Tone"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_q6_3"/>
+
+        <ImageView
+            android:src="@drawable/q6_deeptone"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/imageView_q6_5"/>
+
+    </LinearLayout>
     <ImageView
-        android:src="@drawable/q1_tip"
+        android:src="@drawable/q6_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/imageView_q1_5" />
+        android:layout_marginTop="10dp"
+        android:id="@+id/imageView_q6_6" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -85,7 +106,7 @@
             android:text="Next▶"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_q1"
+            android:id="@+id/button_q6"
             android:background="#00ff0000"
             android:layout_weight="0.01" />
 
@@ -95,6 +116,4 @@
             android:layout_weight="0.05" />
 
     </LinearLayout>
-
-
 </LinearLayout>
