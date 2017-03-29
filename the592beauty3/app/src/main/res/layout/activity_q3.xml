@@ -18,23 +18,30 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView_q3_2" />
 
-    <RadioButton
-        android:text="Yes"
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp"
-        android:id="@+id/radio_q3_1"/>
+        android:id="@+id/radioG_q3">
 
-    <RadioButton
-        android:text="No"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp"
-        android:id="@+id/radio_q3_2"/>
+        <RadioButton
+            android:text="Yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:id="@+id/radio_q3_1"/>
+
+        <RadioButton
+            android:text="No"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:id="@+id/radio_q3_2"/>
+
+    </RadioGroup>
 
     <ImageView
         android:src="@drawable/q3_tip"

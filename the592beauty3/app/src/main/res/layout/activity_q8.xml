@@ -17,6 +17,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView_q8_2" />
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioG_q8">
+
     <RadioButton
         android:text="Yes"
         android:layout_width="match_parent"
@@ -34,6 +39,8 @@
         android:layout_marginLeft="30dp"
         android:textSize="20dp"
         android:id="@+id/radio_q8_2" />
+
+    </RadioGroup>
 
     <ImageView
         android:src="@drawable/q8_tip"

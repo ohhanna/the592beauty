@@ -17,23 +17,30 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView_q9_2" />
 
-    <RadioButton
-        android:text="Cute, Lovely Style"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp"
-        android:id="@+id/radio_q9_1" />
+        android:id="@+id/radioG_q9">
 
-    <RadioButton
-        android:text="Elegance, Calm Style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp"
-        android:id="@+id/radio_q9_2" />
+        <RadioButton
+            android:text="Cute, Lovely Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:id="@+id/radio_q9_1" />
+
+        <RadioButton
+            android:text="Elegance, Calm Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:id="@+id/radio_q9_2" />
+
+    </RadioGroup>
 
     <ImageView
         android:src="@drawable/q9_tip"

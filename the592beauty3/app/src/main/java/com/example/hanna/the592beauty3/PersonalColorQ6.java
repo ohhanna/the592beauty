@@ -9,38 +9,40 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 /**
- * Created by hanna on 2017-02-07.
+ * Created by nightprimula on 2017-03-29.
  */
 
-public class PersonalColorQ2 extends Activity {
 
-    Button button_q2;
-    RadioGroup radioG_q2;
+public class PersonalColorQ6 extends Activity {
+
+    Button button_q6;
+    RadioGroup radioG_q6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_q2);
+        setContentView(R.layout.activity_q6);
 
-        button_q2 = (Button)findViewById(R.id.button_q2);
-        button_q2.setOnClickListener(new View.OnClickListener(){
+        button_q6 = (Button)findViewById(R.id.button_q6);
+        button_q6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), PersonalColorQ3.class);
-                switch(radioG_q2.getCheckedRadioButtonId()){
-                    case R.id.radio_q2_1:
+                Intent intent = new Intent(getApplicationContext(), PersonalColorQ7.class);
+                switch(radioG_q6.getCheckedRadioButtonId()){
+                    case R.id.radio_q6_1:
                         startActivity(intent);
                         break;
-                    case R.id.radio_q2_2:
+                    case R.id.radio_q6_2:
+                        startActivity(intent);
+                        break;
+                    case R.id.radio_q6_3:
                         startActivity(intent);
                         break;
                     default :
                         Toast.makeText(getApplicationContext(),"버튼을 선택하세요.",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
-
 }

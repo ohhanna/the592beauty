@@ -23,44 +23,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:text="Brown Base"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:layout_width="164dp"
+        <RadioGroup
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_q5_1" />
+            android:id="@+id/radioG_q5">
 
-        <ImageView
-            android:src="@drawable/q5_brownbase"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/imageView_q5_3" />
+            <RadioButton
+                android:text="Brown Base"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q5_1" />
 
-    </LinearLayout>
+            <RadioButton
+                android:text="Red Brown Base"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q5_2"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </RadioGroup>
 
-        <RadioButton
-            android:text="Red Brown Base"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="18dp"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_q5_2"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:src="@drawable/q5_redbrownbase"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/imageView_q5_4"/>
+            <ImageView
+                android:src="@drawable/q5_brownbase"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageView_q5_3" />
+
+            <ImageView
+                android:src="@drawable/q5_redbrownbase"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/imageView_q5_4"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -95,6 +102,5 @@
             android:layout_weight="0.05" />
 
     </LinearLayout>
-
 
 </LinearLayout>

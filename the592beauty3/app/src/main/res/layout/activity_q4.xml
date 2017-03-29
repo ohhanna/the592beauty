@@ -23,28 +23,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:text="Brown"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_q4_1" />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:src="@drawable/q4_brown"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
+            <RadioButton
+                android:text="Brown"
                 android:layout_marginTop="10dp"
-                android:id="@+id/imageView_q4_3" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q4_1" />
 
             <RadioButton
                 android:text="DarkBrown"
@@ -55,6 +45,30 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/radio_q4_2"/>
 
+            <RadioButton
+                android:text="Black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q4_3"/>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:src="@drawable/q4_brown"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageView_q4_3" />
+
             <ImageView
                 android:src="@drawable/q4_darkbrown"
                 android:layout_width="150dp"
@@ -62,30 +76,17 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/imageView_q4_4"/>
 
+            <ImageView
+                android:src="@drawable/q4_black"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageView_q4_5"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:text="Black"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="30dp"
-                        android:textSize="20dp"
-                        android:layout_width="164dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/radio_q4_3"/>
-
-                    <ImageView
-                        android:src="@drawable/q4_black"
-                        android:layout_width="150dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/imageView_q4_5"/>
-
-                </LinearLayout>
     <ImageView
         android:src="@drawable/q4_tip"
         android:layout_width="match_parent"
@@ -98,23 +99,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.99" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.99" />
 
-            <Button
-                android:text="Next▶"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_q4"
-                android:background="#00ff0000"
-                android:layout_weight="0.01" />
+        <Button
+            android:text="Next▶"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_q4"
+            android:background="#00ff0000"
+            android:layout_weight="0.01" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05" />
 
     </LinearLayout>
+
 </LinearLayout>

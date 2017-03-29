@@ -23,44 +23,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:text="Yellow Base"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:layout_width="164dp"
+        <RadioGroup
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_q1_1" />
+            android:id="@+id/radioG_q1">
 
-        <ImageView
-            android:src="@drawable/q1_yellow"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/imageView_q1_3" />
+            <RadioButton
+                android:text="Yellow Base"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q1_1" />
 
-    </LinearLayout>
+            <RadioButton
+                android:text="Pink Base"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_q1_2"/>
+        </RadioGroup>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:text="Pink Base"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_q1_2"/>
+            <ImageView
+                android:src="@drawable/q1_yellow"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageView_q1_3" />
 
-        <ImageView
-            android:src="@drawable/q1_pink"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/imageView_q1_4"/>
+            <ImageView
+                android:src="@drawable/q1_pink"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageView_q1_4"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
