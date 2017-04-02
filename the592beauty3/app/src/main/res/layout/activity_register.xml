@@ -25,7 +25,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/join_id"
+            android:id="@+id/etID"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
@@ -36,13 +36,13 @@
             android:layout_marginLeft="15dp"
             android:layout_width="80dp"
             android:text="CHECK"
-            android:id="@+id/button_joincheck"
+            android:id="@+id/bCheck"
             android:layout_height="50dp" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/join_pw"
+        android:id="@+id/etPassword"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_below="@+id/emailInput"
@@ -55,7 +55,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
-        android:id="@+id/join_name"
+        android:id="@+id/etName"
         android:layout_centerHorizontal="true"
         android:hint="Name" />
 
@@ -65,7 +65,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bCancel"
             android:text="CANCEL"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             android:layout_marginTop="20dp"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bSubmit"
             android:text="SUBMIT"
             android:layout_width="130dp"
             android:layout_height="wrap_content"

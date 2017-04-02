@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-/**
- * Created by hanna on 2017-02-07.
- */
-
 public class PersonalColorQ2 extends Activity {
 
     Button button_q2;
@@ -28,16 +24,17 @@ public class PersonalColorQ2 extends Activity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ3.class);
-                switch(radioG_q2.getCheckedRadioButtonId()){
-                    case R.id.radio_q2_1:
-                        startActivity(intent);
-                        break;
-                    case R.id.radio_q2_2:
-                        startActivity(intent);
-                        break;
-                    default :
-                        Toast.makeText(getApplicationContext(),"버튼을 선택하세요.",Toast.LENGTH_SHORT).show();
-                }
+                startActivity(intent);
+//                switch(radioG_q2.getCheckedRadioButtonId()){
+//                    case R.id.radio_q2_1:
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.radio_q2_2:
+//                        startActivity(intent);
+//                        break;
+//                    default :
+//                        Toast.makeText(getApplicationContext(),"버튼을 선택하세요.",Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

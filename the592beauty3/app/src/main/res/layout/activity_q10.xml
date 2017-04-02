@@ -38,7 +38,7 @@
             android:text="UPLOAD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_q10_1"
+            android:id="@+id/button_upload"
             android:layout_weight="1"
             android:backgroundTint="?android:attr/colorControlNormal" />
 

@@ -83,14 +83,6 @@
             android:src="@drawable/homesmall" />
 
         <ImageButton
-            android:id="@+id/button_timeline"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.5"
-            android:background="#ffffff"
-            android:src="@drawable/timelinesmall" />
-
-        <ImageButton
             android:id="@+id/button_account"
             android:layout_width="wrap_content"
             android:layout_height="50dp"

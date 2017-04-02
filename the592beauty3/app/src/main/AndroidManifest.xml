@@ -17,11 +17,21 @@
         <activity android:name = ".PersonalColorQ1"/>
         <activity android:name = ".PersonalColorQ2"/>
         <activity android:name = ".PersonalColorQ3"/>
-        <activity android:name = ".Login"/>
-        <activity android:name = ".Join"/>
+        <activity android:name = ".PersonalColorQ4"/>
+        <activity android:name = ".PersonalColorQ5"/>
+        <activity android:name = ".PersonalColorQ6"/>
+        <activity android:name = ".PersonalColorQ7"/>
+        <activity android:name = ".PersonalColorQ8"/>
+        <activity android:name = ".PersonalColorQ9"/>
+        <activity android:name = ".PersonalColorQ10"/>
+        <activity android:name= ".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UserAreaActivity"></activity>
+
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 

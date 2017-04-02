@@ -19,7 +19,6 @@ public class MainActivity extends Activity {
     Button button_findyourcolor;
 
     ImageButton button_home;
-    ImageButton button_timeline;
     ImageButton button_account;
 
     final int DIALOG_LIST = 2;
@@ -56,14 +55,13 @@ public class MainActivity extends Activity {
         });
 
         button_home = (ImageButton)findViewById(R.id.button_home);
-        button_timeline = (ImageButton)findViewById(R.id.button_timeline);
 
         button_account = (ImageButton)findViewById(R.id.button_account);
-        button_account.setOnClickListener(new View.OnClickListener(){
+        button_account.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent2);
             }
         });
 
