@@ -5,38 +5,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class PersonalColorQ3 extends Activity {
 
-    Button button_q3;
-    RadioGroup radioG_q3;
+    Button bNext;
+    RadioGroup rg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q3);
 
-        button_q3 = (Button)findViewById(R.id.button_q3);
-        button_q3.setOnClickListener(new View.OnClickListener(){
+        rg = (RadioGroup) findViewById(R.id.rdgroup);
+
+        bNext = (Button)findViewById(R.id.bNext);
+        bNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), PersonalColorQ4.class);
-                startActivity(intent);
-//                switch(radioG_q3.getCheckedRadioButtonId()){
-//                    case R.id.radio_q3_1:
-//                        startActivity(intent);
-//                        break;
-//                    case R.id.radio_q3_2:
-//                        startActivity(intent);
-//                        break;
-//                    default :
-//                        Toast.makeText(getApplicationContext(),"버튼을 선택하세요.",Toast.LENGTH_SHORT).show();
-//                }
+                RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
+                String str_Qtype = rd.getText().toString();
 
+                Intent intent = new Intent(getApplicationContext(), PersonalColorQ4.class);
+
+                switch(rg.getCheckedRadioButtonId()) {
+                    case R.id.radio_q3_1:
+                        Toast.makeText(getApplicationContext(), str_Qtype, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+
+                    case R.id.radio_q3_2:
+                        Toast.makeText(getApplicationContext(), str_Qtype, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+                }
             }
         });
     }
-
 }

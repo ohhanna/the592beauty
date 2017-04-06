@@ -19,7 +19,8 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/rdgroup" >
 
         <RadioButton
             android:text="Thin"
@@ -62,7 +63,7 @@
             android:text="Next▶"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_q7"
+            android:id="@+id/bNext"
             android:background="#00ff0000"
             android:layout_weight="0.01" />
 
