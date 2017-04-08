@@ -26,10 +26,16 @@ public class PersonalColorQ1 extends Activity {
         bNext = (Button)findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener(){
             @Override
+
             public void onClick(View view){
                 RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
-                String str_Qtype = rd.getText().toString();
 
+                if(rg.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                String str_Qtype = rd.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
 
                 switch(rg.getCheckedRadioButtonId()) {
@@ -43,8 +49,13 @@ public class PersonalColorQ1 extends Activity {
                         startActivity(intent);
                         break;
 
+                    default:
+                        Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
                 }
             }
         });
     }
 }
+// Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
