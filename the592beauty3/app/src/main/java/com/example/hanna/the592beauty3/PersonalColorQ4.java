@@ -30,6 +30,10 @@ public class PersonalColorQ4 extends Activity {
             public void onClick(View view){
                 RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
 
+                ColorWeight weight = (ColorWeight) getApplicationContext();
+                int cool = weight.getCool();
+                int warm = weight.getWarm();
+
                 if(rg.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
                     return ;
@@ -40,17 +44,27 @@ public class PersonalColorQ4 extends Activity {
 
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q4_1:
-                        Toast.makeText(getApplicationContext(), str_Qtype, Toast.LENGTH_SHORT).show();
+                        cool = cool -1;
+                        warm = warm +1;
+                        weight.setCool(cool);
+                        weight.setWarm(warm);
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q4_2:
-                        Toast.makeText(getApplicationContext(), str_Qtype, Toast.LENGTH_SHORT).show();
+                        cool = cool + 1;
+                        warm = warm - 1;
+                        weight.setColor(cool, warm);
+                        Toast.makeText(getApplicationContext(), "Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q4_3:
-                        Toast.makeText(getApplicationContext(), str_Qtype, Toast.LENGTH_SHORT).show();
+                        cool = cool + 1;
+                        warm = warm - 1;
+                        weight.setColor(cool, warm);
+                        Toast.makeText(getApplicationContext(), "Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                 }

@@ -1,5 +1,6 @@
 package com.example.hanna.the592beauty3;
 
+import android.app.Application;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
