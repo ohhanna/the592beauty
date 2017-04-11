@@ -62,10 +62,10 @@ public class PersonalColorQ10 extends Activity {
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
 
                                     intent.putExtra("crop", "true");
-//                                    intent.putExtra("aspectX", 0);
-//                                    intent.putExtra("aspectY", 0);
-//                                    intent.putExtra("outputX", 200);
-//                                    intent.putExtra("outputY", 150);
+                                    intent.putExtra("aspectX", 0);
+                                    intent.putExtra("aspectY", 0);
+                                    intent.putExtra("outputX", 200);
+                                    intent.putExtra("outputY", 150);
 
                                     try {
                                         intent.putExtra("return-data", true);
@@ -83,10 +83,10 @@ public class PersonalColorQ10 extends Activity {
                                     intent.setAction(Intent.ACTION_GET_CONTENT);
                                     // 잘라내기 셋팅
                                     intent.putExtra("crop", "true");
-//                                    intent.putExtra("aspectX", 0);
-//                                    intent.putExtra("aspectY", 0);
-//                                    intent.putExtra("outputX", 200);
-//                                    intent.putExtra("outputY", 150);
+                                    intent.putExtra("aspectX", 0);
+                                    intent.putExtra("aspectY", 0);
+                                    intent.putExtra("outputX", 200);
+                                    intent.putExtra("outputY", 150);
                                     try {
                                         intent.putExtra("return-data", true);
                                         startActivityForResult(Intent.createChooser(intent,
