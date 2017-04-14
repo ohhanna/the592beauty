@@ -26,9 +26,9 @@ public class MainActivity extends Activity {
 
     final int DIALOG_LIST = 2;
 
-    private static final int PICK_FROM_CAMERA = 1;
-    private static final int PICK_FROM_GALLERY = 2;
-    private ImageView imgview;
+//    private static final int PICK_FROM_CAMERA = 1;
+//    private static final int PICK_FROM_GALLERY = 2;
+//    private ImageView imgview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
         });
 
         button_home = (ImageButton)findViewById(R.id.button_home);
-
         button_account = (ImageButton)findViewById(R.id.button_account);
         button_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,13 +70,13 @@ public class MainActivity extends Activity {
                 startActivity(intent2);
             }
         });
-
     }
 
     @Override
     @Deprecated
     protected Dialog onCreateDialog(int id){
         Log.d("test", "onCreateDialog");
+
 
         switch(id){
             case DIALOG_LIST:
@@ -89,44 +88,19 @@ public class MainActivity extends Activity {
                         new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialog, int which){
+                                ColorWeight weight = (ColorWeight) getApplicationContext();
                                 if(which == 0){
-                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
-
-                                    intent.putExtra("crop", "true");
-                                    intent.putExtra("aspectX", 0);
-                                    intent.putExtra("aspectY", 0);
-                                    intent.putExtra("outputX", 200);
-                                    intent.putExtra("outputY", 150);
-
-                                    try {
-                                        intent.putExtra("return-data", true);
-                                        startActivityForResult(intent, PICK_FROM_CAMERA);
-                                    } catch (ActivityNotFoundException e) {
-                                        // Do nothing for now
-                                    }
+                                    weight.setWhich(0);
+                                    Intent intent = new Intent(getApplicationContext(), PhotoEdit.class);
+                                    startActivity(intent);
 
                                     dismissDialog(DIALOG_LIST);
                                 }
 
                                 else if(which == 1){
-                                    Intent intent = new Intent();
-                                    // Gallery 호출
-                                    intent.setType("image/*");
-                                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    // 잘라내기 셋팅
-                                    intent.putExtra("crop", "true");
-                                    intent.putExtra("aspectX", 0);
-                                    intent.putExtra("aspectY", 0);
-                                    intent.putExtra("outputX", 200);
-                                    intent.putExtra("outputY", 150);
-                                    try {
-                                        intent.putExtra("return-data", true);
-                                        startActivityForResult(Intent.createChooser(intent,
-                                                "Complete action using"), PICK_FROM_GALLERY);
-                                    } catch (ActivityNotFoundException e) {
-                                        // Do nothing for now
-                                    }
+                                    weight.setWhich(1);
+                                    Intent intent = new Intent(getApplicationContext(), PhotoEdit.class);
+                                    startActivity(intent);
 
                                     dismissDialog(DIALOG_LIST);
                                 }
@@ -135,23 +109,5 @@ public class MainActivity extends Activity {
                 return builder.create();
         }
         return super.onCreateDialog(id);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == PICK_FROM_CAMERA) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap photo = extras.getParcelable("data");
-                imgview.setImageBitmap(photo);
-            }
-        }
-        if (requestCode == PICK_FROM_GALLERY) {
-            Bundle extras2 = data.getExtras();
-            if (extras2 != null) {
-                Bitmap photo = extras2.getParcelable("data");
-                imgview.setImageBitmap(photo);
-            }
-        }
     }
 }

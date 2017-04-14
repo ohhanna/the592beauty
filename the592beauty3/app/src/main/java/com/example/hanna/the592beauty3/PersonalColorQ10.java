@@ -6,7 +6,10 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -14,8 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static com.example.hanna.the592beauty3.R.id.button_upload;
+import static com.example.hanna.the592beauty3.R.id.imageView1;
 
 public class PersonalColorQ10 extends Activity {
 
@@ -23,6 +31,7 @@ public class PersonalColorQ10 extends Activity {
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
+
     private ImageView imgview;
 
     @Override
@@ -77,8 +86,10 @@ public class PersonalColorQ10 extends Activity {
                                     dismissDialog(DIALOG_LIST);
                                 }
                                 else if(which == 1){
-                                    Intent intent = new Intent();
+                                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
                                     // Gallery 호출
+
                                     intent.setType("image/*");
                                     intent.setAction(Intent.ACTION_GET_CONTENT);
                                     // 잘라내기 셋팅
@@ -105,7 +116,6 @@ public class PersonalColorQ10 extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == PICK_FROM_CAMERA) {
             Bundle extras = data.getExtras();
             if (extras != null) {
@@ -113,13 +123,40 @@ public class PersonalColorQ10 extends Activity {
                 imgview.setImageBitmap(photo);
             }
         }
-        if (requestCode == PICK_FROM_GALLERY) {
-            Bundle extras2 = data.getExtras();
-            if (extras2 != null) {
-                Bitmap photo = extras2.getParcelable("data");
+        else if (requestCode == PICK_FROM_GALLERY) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+
+
+                if(photo.getHeight() < photo.getWidth()){
+                    photo = imgRotate(photo);
+                }
+
                 imgview.setImageBitmap(photo);
+
+
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                Toast.makeText(getApplicationContext(), "다른사진을 선택해주세요", Toast.LENGTH_SHORT).show();
+                Intent intent =  new Intent(getApplicationContext(), MainActivity.class);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                Toast.makeText(getApplicationContext(), "다른사진을 선택해주세요", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             }
         }
     }
+    private Bitmap imgRotate(Bitmap bmp){
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
 
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
+        bmp.recycle();
+
+        return resizedBitmap;
+    }
 }

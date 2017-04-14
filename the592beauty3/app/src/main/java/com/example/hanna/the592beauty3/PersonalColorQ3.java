@@ -44,17 +44,16 @@ public class PersonalColorQ3 extends Activity {
                     case R.id.radio_q3_1:
                         cool = cool -1;
                         warm = warm +1;
-                        weight.setCool(cool);
-                        weight.setWarm(warm);
-                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool(), Toast.LENGTH_SHORT).show();
+                        weight.setColor(cool, warm);
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q3_2:
-                        cool = cool + 1;
-                        warm = warm - 1;
+                        cool = cool +1;
+                        warm = warm -1;
                         weight.setColor(cool, warm);
-                        Toast.makeText(getApplicationContext(), "Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                 }

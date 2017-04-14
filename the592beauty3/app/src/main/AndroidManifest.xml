@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".ColorWeight">            ////////////@@@@@@@@@@@@@@@@
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +26,14 @@
         <activity android:name = ".PersonalColorQ8"/>
         <activity android:name = ".PersonalColorQ9"/>
         <activity android:name = ".PersonalColorQ10"/>
+        <activity android:name = ".Spring"/>
+        <activity android:name = ".Summer"/>
+        <activity android:name = ".Autumn"/>
+        <activity android:name = ".Winter"/>
         <activity android:name= ".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity"/>
+        <activity android:name=".PhotoEdit" />
 
     </application>
 

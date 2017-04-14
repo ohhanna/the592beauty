@@ -40,23 +40,24 @@ public class PersonalColorQ1 extends Activity {
                 }
 
                 String str_Qtype = rd.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
+                //Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
+                Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
+                //Intent intent = new Intent(getApplicationContext(), Spring.class);
 
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q1_1:
                         cool = cool -1;
                         warm = warm +1;
-                        weight.setCool(cool);
-                        weight.setWarm(warm);
-                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool(), Toast.LENGTH_SHORT).show();
+                        weight.setColor(cool, warm);
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q1_2:
-                        cool = cool + 1;
-                        warm = warm - 1;
+                        cool = cool +1;
+                        warm = warm -1;
                         weight.setColor(cool, warm);
-                        Toast.makeText(getApplicationContext(), "Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 

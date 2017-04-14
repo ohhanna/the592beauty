@@ -31,6 +31,7 @@ public class PersonalColorQ9 extends Activity {
                 ColorWeight weight = (ColorWeight) getApplicationContext();
                 int cool = weight.getCool();
                 int warm = weight.getWarm();
+                int w = weight.getWeight();
 
                 if(rg.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
@@ -42,19 +43,16 @@ public class PersonalColorQ9 extends Activity {
 
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q9_1:
-                        cool = cool -1;
-                        warm = warm +1;
-                        weight.setCool(cool);
-                        weight.setWarm(warm);
-                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool(), Toast.LENGTH_SHORT).show();
+                        w= w-2;
+                        weight.setWeight(w);
+                        Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q9_2:
-                        cool = cool + 1;
-                        warm = warm - 1;
-                        weight.setColor(cool, warm);
-                        Toast.makeText(getApplicationContext(), "Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        w= w+2;
+                        weight.setWeight(w);
+                        Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                 }
