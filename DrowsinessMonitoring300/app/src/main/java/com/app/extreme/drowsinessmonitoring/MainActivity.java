@@ -8,6 +8,7 @@ import java.io.InputStream;
 import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.media.FaceDetector;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
     {
         m_Rgba = inputFrame.rgba();
-        Core.transpose(inputFrame.rgba(), m_Rgba);
+//        Core.transpose(inputFrame.rgba(), m_Rgba);
         Core.flip(m_Rgba, m_Rgba, 1);
         Bitmap bitmap = Bitmap.createBitmap(m_Rgba.cols(), m_Rgba.rows(), Bitmap.Config.RGB_565);
         Utils.matToBitmap(m_Rgba, bitmap);
@@ -149,8 +150,16 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         int num = 0;
         num = facedetector.findFaces(resizedBitmap, faces);
 
-        bitmap.recycle();
-        resizedBitmap.recycle();
+        for(int i = 0; i < num; i++)
+        {
+            PointF point = new PointF();
+            faces[i].getMidPoint(point);
+            Point cvPoint = new Point(point.x *2, point.y *2);
+            Scalar scalar = new Scalar(0,255,0);
+            Imgproc.circle(m_Rgba, cvPoint, 10, scalar, -1);
+        }
+        //faces[0].eyesDistance();
+         resizedBitmap.recycle();
 
         return m_Rgba;
     }
