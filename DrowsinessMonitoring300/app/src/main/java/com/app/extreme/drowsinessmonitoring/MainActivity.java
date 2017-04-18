@@ -150,14 +150,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         int num = 0;
         num = facedetector.findFaces(resizedBitmap, faces);
 
-        for(int i = 0; i < num; i++)
-        {
-            PointF point = new PointF();
-            faces[i].getMidPoint(point);
-            Point cvPoint = new Point(point.x *2, point.y *2);
-            Scalar scalar = new Scalar(0,255,0);
-            Imgproc.circle(m_Rgba, cvPoint, 10, scalar, -1);
-        }
+//        for(int i = 0; i < num; i++)
+//        {
+//            PointF point = new PointF();
+//            faces[i].getMidPoint(point);
+//            Point cvPoint = new Point(point.x *2, point.y *2);
+//            Scalar scalar = new Scalar(0,255,0);
+//            Imgproc.circle(m_Rgba, cvPoint, 10, scalar, -1);
+//        }
         //faces[0].eyesDistance();
          resizedBitmap.recycle();
 
