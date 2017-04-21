@@ -1,5 +1,7 @@
 package com.example.layla.cameraopen;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.Camera;
@@ -9,11 +11,12 @@ import android.hardware.camera2.CameraDevice;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.List;
-
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -24,16 +27,43 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private Button mStart;
     private boolean recording = false;
     private MediaRecorder mediaRecorder;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mStart = (Button)findViewById(R.id.button);
+        imageView = (ImageView)findViewById(R.id.imageView);
 
+        mStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCamera!=null){
+                    mCamera.takePicture(null, null, takePicture);
+                }
+            }
+        });
         mCameraView = (SurfaceView)findViewById(R.id.cameraView);
 
         init();
     }
+
+
+    private Camera.PictureCallback takePicture = new Camera.PictureCallback(){
+        public void onPictureTaken(byte[] data, Camera camera){
+            if(data!=null){
+                BitmapFactory.Options scalingOptions = new BitmapFactory.Options();
+                scalingOptions.inSampleSize = camera.getParameters().getPictureSize().width / imageView.getMeasuredWidth();
+                final Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length, scalingOptions);
+                //imageView.setRotationX(90);
+                imageView.setImageBitmap(bmp);
+                imageView.setVisibility(ImageView.VISIBLE);
+
+                camera.startPreview();
+            }
+        }
+    };
 
     private void init(){
 
@@ -60,19 +90,16 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
         // View 가 존재하지 않을 때
         if (mCameraHolder.getSurface() == null) {
             return;
         }
-
         // 작업을 위해 잠시 멈춘다
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
             // 에러가 나더라도 무시한다.
         }
-
         // 카메라 설정을 다시 한다.
         Camera.Parameters parameters = mCamera.getParameters();
         List<String> focusModes = parameters.getSupportedFocusModes();
@@ -97,5 +124,5 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             mCamera = null;
         }
     }
-}
 
+}
