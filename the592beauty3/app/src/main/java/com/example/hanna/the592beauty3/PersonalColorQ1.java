@@ -40,8 +40,8 @@ public class PersonalColorQ1 extends Activity {
                 }
 
                 String str_Qtype = rd.getText().toString();
-                //Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
-                Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
+                Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
+//                Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
                 //Intent intent = new Intent(getApplicationContext(), Spring.class);
 
                 switch(rg.getCheckedRadioButtonId()) {

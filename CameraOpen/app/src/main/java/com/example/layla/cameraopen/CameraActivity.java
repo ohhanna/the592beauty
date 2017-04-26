@@ -2,6 +2,7 @@ package com.example.layla.cameraopen;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.Camera;
@@ -55,10 +56,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             if(data!=null){
                 BitmapFactory.Options scalingOptions = new BitmapFactory.Options();
                 scalingOptions.inSampleSize = camera.getParameters().getPictureSize().width / imageView.getMeasuredWidth();
-                final Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length, scalingOptions);
+                Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length, scalingOptions);
                 //imageView.setRotationX(90);
+                bmp = imgRotate(bmp);
                 imageView.setImageBitmap(bmp);
                 imageView.setVisibility(ImageView.VISIBLE);
+
 
                 camera.startPreview();
             }
@@ -123,6 +126,19 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             mCamera.release();
             mCamera = null;
         }
+    }
+
+    private Bitmap imgRotate(Bitmap bmp){
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
+        bmp.recycle();
+
+        return resizedBitmap;
     }
 
 }

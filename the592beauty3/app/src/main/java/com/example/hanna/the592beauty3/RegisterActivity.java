@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +26,14 @@ public class RegisterActivity extends Activity {
         final EditText etName = (EditText) findViewById(R.id.etName);
         final EditText etID = (EditText) findViewById(R.id.etID);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+
+        final Button bCheck = (Button) findViewById(R.id.bCheck);
+        bCheck.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "사용할 수 있는 ID입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final Button bSubmit = (Button) findViewById(R.id.bSubmit);
         bSubmit.setOnClickListener(new View.OnClickListener() {

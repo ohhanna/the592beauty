@@ -147,6 +147,7 @@ public class PersonalColorQ10 extends Activity {
             }
         }
     }
+
     private Bitmap imgRotate(Bitmap bmp){
         int width = bmp.getWidth();
         int height = bmp.getHeight();
