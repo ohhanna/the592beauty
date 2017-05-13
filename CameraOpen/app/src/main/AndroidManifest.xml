@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/AppTheme">
         <activity android:name=".CameraActivity">
             <intent-filter>
@@ -16,6 +17,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+=======
+        android:theme="@style/AppTheme"
+        android:name=".ColorWeight">
+
+        <activity android:name=".MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".PhotoEdit"/>
+        <activity android:name=".CameraActivity"/>
+        <activity android:name=".PhotoActivity"/>
+>>>>>>> parent of 31017ff... ㅇㅅㅇ
     </application>
 
     <uses-feature android:name="android.hardware.camera" />
@@ -23,5 +39,8 @@
     <uses-permission android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 31017ff... ㅇㅅㅇ
 </manifest>
