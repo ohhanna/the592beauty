@@ -34,6 +34,7 @@ public class PersonalColorQ10 extends Activity {
 
     private ImageView imgview;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
