@@ -34,12 +34,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final ColorWeight weight = (ColorWeight) getApplicationContext();
 
         button_beautyphoto = (Button)findViewById(R.id.button_beautyphoto);
         button_beautyphoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                weight.setWhich(0);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,12 +78,9 @@ public class MainActivity extends Activity {
     @Deprecated
     protected Dialog onCreateDialog(int id){
         Log.d("test", "onCreateDialog");
-
-
         switch(id){
             case DIALOG_LIST:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
                 final String str[] = { "TAKE A PHOTO", "ALBUM" };
                 builder.setTitle("이미지를 불러올 형식을 선택하세요.").
                         setNegativeButton("CANCEL", null).setItems(str,
@@ -90,19 +89,16 @@ public class MainActivity extends Activity {
                             public void onClick(DialogInterface dialog, int which){
                                 ColorWeight weight = (ColorWeight) getApplicationContext();
                                 if(which == 0){
-                                    weight.setWhich(0);
-                                    Intent intent = new Intent(getApplicationContext(), PhotoEdit.class);
-                                    startActivity(intent);
-
-                                    dismissDialog(DIALOG_LIST);
-                                }
-
-                                else if(which == 1){
                                     weight.setWhich(1);
+                                    dismissDialog(DIALOG_LIST);
+                                    Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                                    startActivity(intent);
+                                }
+                                else if(which == 1){
+                                    weight.setWhich(2);
+                                    dismissDialog(DIALOG_LIST);
                                     Intent intent = new Intent(getApplicationContext(), PhotoEdit.class);
                                     startActivity(intent);
-
-                                    dismissDialog(DIALOG_LIST);
                                 }
                             }
                         });

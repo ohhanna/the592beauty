@@ -34,6 +34,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity"/>
         <activity android:name=".PhotoEdit" />
+        <activity android:name=".PhotoActivity"/>
+        <activity android:name=".CameraActivity"/>
         <activity android:name=".upload_photo"/>
 
     </application>
@@ -42,6 +44,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
