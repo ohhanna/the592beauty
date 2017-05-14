@@ -44,7 +44,7 @@ public class PersonalColorQ4 extends Activity {
 
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q4_1:
-                        cool = cool -2;
+                        cool = cool -1;
                         warm = warm +2;
                         weight.setCool(cool);
                         weight.setWarm(warm);
@@ -53,7 +53,7 @@ public class PersonalColorQ4 extends Activity {
                         break;
 
                     case R.id.radio_q4_2:
-                        cool = cool -1;
+                        cool = cool +1;
                         warm = warm +1;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
@@ -62,7 +62,7 @@ public class PersonalColorQ4 extends Activity {
 
                     case R.id.radio_q4_3:
                         cool = cool +2;
-                        warm = warm -2;
+                        warm = warm -1;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
