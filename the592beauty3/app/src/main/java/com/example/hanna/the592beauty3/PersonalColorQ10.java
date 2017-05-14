@@ -6,7 +6,7 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -16,14 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static com.example.hanna.the592beauty3.R.id.button_upload;
 import static com.example.hanna.the592beauty3.R.id.imageView1;
+
 
 public class PersonalColorQ10 extends Activity {
 
@@ -40,6 +40,21 @@ public class PersonalColorQ10 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q10);
 
+        Button button_upload = (Button) findViewById(R.id.button_upload);
+
+        button_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), upload_photo.class);
+                startActivity(intent);
+            }
+
+        });
+    }
+}
+
+
+        /*
         imgview = (ImageView) findViewById(R.id.imageView1);
 
         Button button_upload = (Button) findViewById(R.id.button_upload);
@@ -161,4 +176,4 @@ public class PersonalColorQ10 extends Activity {
 
         return resizedBitmap;
     }
-}
+}*/

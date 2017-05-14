@@ -26,11 +26,10 @@
         android:id="@+id/imageView_q10_3" />
 
 
-
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Space
             android:layout_width="wrap_content"
@@ -38,12 +37,12 @@
             android:layout_weight="1" />
 
         <Button
-            android:text="UPLOAD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/button_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="?android:attr/colorControlNormal" />
+            android:backgroundTint="?android:attr/colorControlNormal"
+            android:text="UPLOAD" />
 
         <Space
             android:layout_width="wrap_content"
@@ -51,12 +50,12 @@
             android:layout_weight="1" />
 
         <Button
-            android:text="Next▶"
+            android:id="@+id/button_q10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_q10"
+            android:layout_weight="0.01"
             android:background="#00ff0000"
-            android:layout_weight="0.01" />
+            android:text="Next▶" />
 
     </LinearLayout>
 

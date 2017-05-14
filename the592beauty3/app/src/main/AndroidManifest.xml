@@ -34,6 +34,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity"/>
         <activity android:name=".PhotoEdit" />
+        <activity android:name=".upload_photo"/>
 
     </application>
 
