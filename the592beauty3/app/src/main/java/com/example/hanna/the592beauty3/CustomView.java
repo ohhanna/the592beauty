@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
@@ -29,7 +31,6 @@ import com.google.android.gms.vision.face.Landmark;
 public class CustomView extends View{
     private Bitmap mBitmap;
     private SparseArray<Face> mFaces;
-    private TextView textView;
 
     int lefteyeRed;
     int lefteyeGreen;
@@ -55,6 +56,7 @@ public class CustomView extends View{
     void setContent(Bitmap bitmap, SparseArray<Face> faces){
         mBitmap = bitmap;
         mFaces = faces;
+
         invalidate();
     }
 
@@ -120,7 +122,7 @@ public class CustomView extends View{
                 int cy = (int)(landmark.getPosition().y * scale);
                 count ++;
                 if(count == 1) {
-                    canvas.drawCircle(cx, cy, 5, paint2);
+                    canvas.drawCircle(cx, cy, 10, paint);
                     int pixel = mBitmap.getPixel((int)landmark.getPosition().x, (int)landmark.getPosition().y);
                     lefteyeRed = Color.red(pixel);
                     lefteyeGreen = Color.green(pixel);
@@ -128,7 +130,7 @@ public class CustomView extends View{
                 }
 
                 if(count == 2) {
-                    canvas.drawCircle(cx, cy, 5, paint2);
+                    canvas.drawCircle(cx, cy, 10, paint);
                     int pixel = mBitmap.getPixel((int)landmark.getPosition().x, (int)landmark.getPosition().y);
                     righteyered = Color.red(pixel);
                     righteyegreen = Color.green(pixel);
@@ -136,7 +138,7 @@ public class CustomView extends View{
                 }
 
                 if(count == 3) {
-                    canvas.drawCircle(cx, cy, 3, paint2);
+                    canvas.drawCircle(cx, cy, 10, paint);
                     int pixel = mBitmap.getPixel((int)landmark.getPosition().x, (int)landmark.getPosition().y);
                     leftcheekred = Color.red(pixel);
                     leftcheekgreen = Color.green(pixel);
@@ -144,15 +146,17 @@ public class CustomView extends View{
                 }
 
                 if(count == 4) {
-                    canvas.drawCircle(cx, cy, 3, paint2);
+                    canvas.drawCircle(cx, cy, 10, paint);
                     int pixel = mBitmap.getPixel((int)landmark.getPosition().x, (int)landmark.getPosition().y);
                     rightcheekred = Color.red(pixel);
                     rightcheekgreen= Color.green(pixel);
-                    righteyeblue = Color.blue(pixel);
+                    rightcheekblue = Color.blue(pixel);
                 }
 
                 else
                     canvas.drawCircle(cx, cy, 10, paint);
+
+                ////////////5.16///////////////////////////////////////////////////////////////////////////
 /*
 
                 textView.setText(Integer.toString(lefteyeRed) + " + " + Integer.toString(lefteyeGreen) + " + " + Integer.toString(lefteyeBlue)+"\n"
@@ -161,8 +165,29 @@ public class CustomView extends View{
                         + Integer.toString(rightcheekred) + " + " + Integer.toString(rightcheekgreen) + " + " + Integer.toString(rightcheekblue));
 */
 
+
+
             }
         }
     }
+
+    public int setfacecolor(){
+        int leftcheekyellow = 255 - leftcheekblue;
+        int rightcheekyellow = 255 - rightcheekblue;
+        int leftcheek;
+        int rightcheek;
+        int result = 3;
+
+//y - (c + m) : c = 255-r / m = 255 - green
+        leftcheek = leftcheekyellow - (255 - leftcheekred + 255 - leftcheekgreen);
+        rightcheek = rightcheekyellow - (255 - rightcheekred + 255 - rightcheekgreen);
+
+        if((leftcheek + rightcheek) / 2 < 25){
+            result = -3;
+        }
+
+        return result;
+    }
 }
+
 

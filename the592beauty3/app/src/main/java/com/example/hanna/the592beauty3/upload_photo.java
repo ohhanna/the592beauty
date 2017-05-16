@@ -13,6 +13,8 @@ import android.util.SparseArray;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
@@ -26,6 +28,7 @@ public class upload_photo extends Activity {
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     Bitmap photo;
+    ColorWeight weight;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,6 @@ public class upload_photo extends Activity {
 
         Button buttonGallery = (Button) findViewById(R.id.album_open);
         Button buttonCamera = (Button) findViewById(R.id.camera_open);
-
 
         buttonGallery.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -90,6 +92,7 @@ public class upload_photo extends Activity {
     protected void onActivityResult(int requestCode,
                                     int resultCode,
                                     Intent data) {
+
         if (requestCode == PICK_FROM_CAMERA) {
             Bundle extras = data.getExtras();
             if (extras != null) {
@@ -118,6 +121,27 @@ public class upload_photo extends Activity {
         //TextView textView = (TextView)findViewById(R.id.textView_eye);
         CustomView overlay = (CustomView) findViewById(R.id.customView);
         overlay.setContent(photo, faces);
+
+        int number = overlay.setfacecolor();
+
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+
+        int cool = weight.getCool();
+        int warm = weight.getWarm();
+
+        if(number == 3){
+            cool = cool + 3;
+            warm = warm - 1;
+            weight.setColor(cool, warm);
+        }
+        else{
+            cool = cool - 1;
+            warm = warm + 3;
+            weight.setColor(cool, warm);
+        }
+
+        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
         detector.release();
+
     }
 }

@@ -21,7 +21,6 @@ public class ColorWeight extends Application {
         warm = 0;
         weight = 0;
         which = 0;
-
         super.onCreate();
     }
 
