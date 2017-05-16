@@ -27,15 +27,18 @@ import com.google.android.gms.vision.face.FaceDetector;
 public class upload_photo extends Activity {
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
+    private static final int WARM = 1;
+    private static final int COOL = -1;
     Bitmap photo;
     ColorWeight weight;
+    int result;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_photo);
         BitmapFactory.Options options = new BitmapFactory.Options();
-
+        Button seeResult = (Button)findViewById(R.id.color_result);
         Button buttonGallery = (Button) findViewById(R.id.album_open);
         Button buttonCamera = (Button) findViewById(R.id.camera_open);
 
@@ -84,6 +87,22 @@ public class upload_photo extends Activity {
                 } catch (ActivityNotFoundException e) {
                     // Do nothing for now
                 }
+            }
+        });
+
+        seeResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(result==COOL) {
+                    Intent intent = new Intent(getApplicationContext(), Winter.class);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), Spring.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -140,8 +159,14 @@ public class upload_photo extends Activity {
             weight.setColor(cool, warm);
         }
 
-        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
-        detector.release();
+       if(cool>warm)
+           result = COOL;
+        else
+            result = WARM;
 
+        // Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+        detector.release();
+        weight.setColor(0,0);
     }
+
 }

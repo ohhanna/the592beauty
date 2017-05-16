@@ -13,17 +13,23 @@
         android:id="@+id/album_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Album Open"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="31dp"
-        android:text="Album Open" />
+        android:layout_toEndOf="@+id/camera_open" />
 
     <Button
         android:id="@+id/camera_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/album_open"
-        android:layout_marginStart="71dp"
-        android:text="Camera Open" />
+        android:text="Camera Open"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/color_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="See the Result" />
 </RelativeLayout>
