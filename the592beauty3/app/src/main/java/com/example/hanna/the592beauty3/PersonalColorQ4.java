@@ -41,35 +41,55 @@ public class PersonalColorQ4 extends Activity {
 
                 String str_Qtype = rd.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ5.class);
-
+                finish();
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q4_1:
+                        weight.setTemp(cool,warm);
                         cool = cool -1;
                         warm = warm +2;
-                        weight.setCool(cool);
-                        weight.setWarm(warm);
+                        weight.setColor(cool,warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q4_2:
+                        weight.setTemp(cool,warm);
                         cool = cool +1;
                         warm = warm +1;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q4_3:
+                        weight.setTemp(cool,warm);
                         cool = cool +2;
                         warm = warm -1;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
                 }
-
             }
         });
+    }
+    public void onBackPressed() {
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        if(weight.getBack() == 0) {
+            Intent intent = new Intent(getApplicationContext(), PersonalColorQ3.class);
+            finish();
+            weight.setBack(1);
+            weight.setColor(weight.getTempc(),weight.getTempw());
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            finish();
+            weight.setBack(0);
+            startActivity(intent);
+        }
     }
 }

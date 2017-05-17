@@ -28,8 +28,10 @@ public class PhotoEdit extends Activity {
     Button button_crop;
     Button button_rotate;  //90도
     Button button_inverse; //좌우만
+    Button button_origin;
     String str;
     String photoPath;
+    Bitmap originBitmap;
     Bitmap bitmap;
     Bitmap adjustedBitmap;
     private ImageView imgview;
@@ -46,7 +48,11 @@ public class PhotoEdit extends Activity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             final Bitmap bmp = BitmapFactory.decodeFile(photoPath, options);
+//            MyView m = new MyView(this);
+//            setContentView(m);
             imgview.setImageBitmap(bmp);
+            originBitmap = bmp;
+            bitmap = bmp;
         } else {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             // Gallery 호출
@@ -70,7 +76,7 @@ public class PhotoEdit extends Activity {
 //        button_bright.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                onBackPressed();
+//                invalidate();
 //            }
 //        });
 //        button_clear = (Button) findViewById(R.id.imageButton2);
@@ -80,34 +86,44 @@ public class PhotoEdit extends Activity {
 //                onBackPressed();
 //            }
 //        });
-//        button_crop = (Button) findViewById(R.id.imageButton3);
-//        button_crop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
-//        button_rotate = (Button) findViewById(R.id.imageButton4);
-//        button_rotate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Matrix rotateMatrix = new Matrix();
-//                rotateMatrix.postRotate(90); //-360~360
-//                Bitmap rotateImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotateMatrix, false);
-//                ((BitmapDrawable)imageView.getDrawable()).getBitmap().recycle();
-//                imgview.setImageBitmap(rotateImage);
-//            }
-//        });
-//        button_inverse = (Button) findViewById(R.id.imageButton5);
-//        button_inverse.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Matrix sideInversion = new Matrix();
-//                sideInversion.setScale(-1, 1);  // 좌우반전
-//                Bitmap inverseImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), sideInversion, false);
-//            }
-//        });
-
+        button_crop = (Button) findViewById(R.id.imageButton3);
+        button_crop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        button_rotate = (Button) findViewById(R.id.imageButton4);
+        button_rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix rotateMatrix = new Matrix();
+                rotateMatrix.postRotate(90); //-360~360
+                Bitmap rotateImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotateMatrix, false);
+//                ((BitmapDrawable)imgview.getDrawable()).getBitmap().recycle();
+                imgview.setImageBitmap(rotateImage);
+                bitmap = rotateImage;
+            }
+        });
+        button_inverse = (Button) findViewById(R.id.imageButton5);
+        button_inverse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix sideInversion = new Matrix();
+                sideInversion.setScale(-1, 1);  // 좌우반전
+                Bitmap inverseImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), sideInversion, false);
+                imgview.setImageBitmap(inverseImage);
+                bitmap = inverseImage;
+            }
+        });
+        button_origin = (Button) findViewById(R.id.imageButton6);
+        button_origin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgview.setImageBitmap(originBitmap);
+                bitmap = originBitmap;
+            }
+        });
         button_back = (Button) findViewById(R.id.button_back);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +172,8 @@ public class PhotoEdit extends Activity {
                 photo = imgRotate(photo);
             }
             imgview.setImageBitmap(photo);
+            originBitmap = photo;
+            bitmap = photo;
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             Toast.makeText(getApplicationContext(), "다른사진을 선택해주세요", Toast.LENGTH_SHORT).show();

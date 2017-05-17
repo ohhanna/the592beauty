@@ -43,21 +43,25 @@ public class PersonalColorQ1 extends Activity {
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
 //                Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
                 //Intent intent = new Intent(getApplicationContext(), Spring.class);
-
+                finish();
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q1_1:
+                        weight.setTemp(cool,warm);
                         cool = cool -1;
                         warm = warm +2;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q1_2:
+                        weight.setTemp(cool,warm);
                         cool = cool +2;
                         warm = warm -1;
                         weight.setColor(cool, warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
 
@@ -68,6 +72,11 @@ public class PersonalColorQ1 extends Activity {
                 }
             }
         });
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        finish();
+        startActivity(intent);
     }
 }
 // Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();

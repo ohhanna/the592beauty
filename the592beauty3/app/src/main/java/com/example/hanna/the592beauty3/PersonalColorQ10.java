@@ -35,6 +35,14 @@ public class PersonalColorQ10 extends Activity {
 
         });
     }
+
+    public void onBackPressed() {
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        Intent intent = new Intent(getApplicationContext(), PersonalColorQ9.class);
+        finish();
+        weight.setWeight(weight.getTw());
+        startActivity(intent);
+    }
 }
 
 

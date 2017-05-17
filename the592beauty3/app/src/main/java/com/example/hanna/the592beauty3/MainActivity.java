@@ -3,17 +3,13 @@ package com.example.hanna.the592beauty3;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 public class MainActivity extends Activity {
 
@@ -35,7 +31,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ColorWeight weight = (ColorWeight) getApplicationContext();
-
+        weight.init();
         button_beautyphoto = (Button)findViewById(R.id.button_beautyphoto);
         button_beautyphoto.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,6 +55,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ1.class);
+                finish();
                 startActivity(intent);
             }
         });

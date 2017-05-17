@@ -40,24 +40,43 @@ public class PersonalColorQ8 extends Activity {
 
                 String str_Qtype = rd.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ9.class);
-
+                finish();
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q8_1:
+                        weight.setTw(w);
                         w= w+1;
                         weight.setWeight(w);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
 
                     case R.id.radio_q8_2:
+                        weight.setTw(w);
                         w= w-1;
                         weight.setWeight(w);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
+                        weight.setBack(0);
                         startActivity(intent);
                         break;
                 }
-
             }
         });
+    }
+    public void onBackPressed() {
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        if(weight.getBack() == 0) {
+            Intent intent = new Intent(getApplicationContext(), PersonalColorQ7.class);
+            finish();
+            weight.setWeight(weight.getTw());
+            weight.setBack(1);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            finish();
+            weight.setBack(0);
+            startActivity(intent);
+        }
     }
 }
