@@ -21,14 +21,9 @@ import java.io.IOException;
 import static android.R.attr.data;
 
 public class PhotoEdit extends Activity {
-    Button button_back;
-    Button button_save;
-    Button button_bright;
-    Button button_clear;
-    Button button_crop;
-    Button button_rotate;  //90도
-    Button button_inverse; //좌우만
-    Button button_origin;
+    Button btn_Back, btn_Save, btn_Origin, btn_Eye, btn_Chin, btn_Whitening, btn_Blemish,
+            btn_Crop, btn_Rotation, btn_Inversion, btn_Intensity, btn_Saturation, btn_Sharpening;
+       // 뒤로, 저장, 원본, 눈확대, 갸름하게, 미백, 잡티제거, 자르기, 회전, 역, 명도, 채도, 선명도
     String str;
     String photoPath;
     Bitmap originBitmap;
@@ -72,68 +67,24 @@ public class PhotoEdit extends Activity {
             }
         }
 
-//        button_bright = (Button) findViewById(R.id.imageButton1);
-//        button_bright.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                invalidate();
-//            }
-//        });
-//        button_clear = (Button) findViewById(R.id.imageButton2);
-//        button_clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
-        button_crop = (Button) findViewById(R.id.imageButton3);
-        button_crop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        button_rotate = (Button) findViewById(R.id.imageButton4);
-        button_rotate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Matrix rotateMatrix = new Matrix();
-                rotateMatrix.postRotate(90); //-360~360
-                Bitmap rotateImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotateMatrix, false);
-//                ((BitmapDrawable)imgview.getDrawable()).getBitmap().recycle();
-                imgview.setImageBitmap(rotateImage);
-                bitmap = rotateImage;
-            }
-        });
-        button_inverse = (Button) findViewById(R.id.imageButton5);
-        button_inverse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Matrix sideInversion = new Matrix();
-                sideInversion.setScale(-1, 1);  // 좌우반전
-                Bitmap inverseImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), sideInversion, false);
-                imgview.setImageBitmap(inverseImage);
-                bitmap = inverseImage;
-            }
-        });
-        button_origin = (Button) findViewById(R.id.imageButton6);
-        button_origin.setOnClickListener(new View.OnClickListener() {
+        btn_Origin = (Button) findViewById(R.id.btn_Origin);
+        btn_Origin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imgview.setImageBitmap(originBitmap);
                 bitmap = originBitmap;
             }
         });
-        button_back = (Button) findViewById(R.id.button_back);
-        button_back.setOnClickListener(new View.OnClickListener() {
+        btn_Back = (Button) findViewById(R.id.btn_Back);
+        btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
 
-        button_save = (Button) findViewById(R.id.button_save);
-        button_save.setOnClickListener(new View.OnClickListener() {
+        btn_Save = (Button) findViewById(R.id.btn_Save);
+        btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FileOutputStream outStream = null;
@@ -158,6 +109,95 @@ public class PhotoEdit extends Activity {
                 finish();
             }
         });
+
+        btn_Eye = (Button) findViewById(R.id.btn_Eye);
+        btn_Eye.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        btn_Chin = (Button) findViewById(R.id.btn_Chin);
+        btn_Chin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        btn_Whitening = (Button) findViewById(R.id.btn_Whitening);
+        btn_Whitening.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        btn_Blemish = (Button) findViewById(R.id.btn_Blemish);
+        btn_Blemish.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        btn_Crop = (Button) findViewById(R.id.btn_Crop);
+        btn_Crop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_Rotation = (Button) findViewById(R.id.btn_Rotation);
+        btn_Rotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix rotateMatrix = new Matrix();
+                rotateMatrix.postRotate(90); //-360~360
+                Bitmap rotateImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotateMatrix, false);
+//                ((BitmapDrawable)imgview.getDrawable()).getBitmap().recycle();
+                imgview.setImageBitmap(rotateImage);
+                bitmap = rotateImage;
+            }
+        });
+
+        btn_Inversion = (Button) findViewById(R.id.btn_Inversion);
+        btn_Inversion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix sideInversion = new Matrix();
+                sideInversion.setScale(-1, 1);  // 좌우반전
+                Bitmap inverseImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), sideInversion, false);
+                imgview.setImageBitmap(inverseImage);
+                bitmap = inverseImage;
+            }
+        });
+
+        btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
+        btn_Intensity.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
+        btn_Saturation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+            }
+        });
+
+        btn_Sharpening = (Button) findViewById(R.id.btn_Sharpening);
+        btn_Sharpening.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
