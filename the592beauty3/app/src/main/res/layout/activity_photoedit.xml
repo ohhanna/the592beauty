@@ -45,6 +45,13 @@
         android:layout_width="match_parent"
         android:layout_height="400dp" />
 
+    <SeekBar
+        android:id="@+id/satBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="512"
+        android:progress="256"/>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -109,6 +116,11 @@
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
                 android:text="Intensity" />
+            <android.support.v7.widget.AppCompatSeekBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
 
             <Button
                 android:id="@+id/btn_Saturation"

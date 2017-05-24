@@ -5,13 +5,19 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -23,19 +29,25 @@ import static android.R.attr.data;
 public class PhotoEdit extends Activity {
     Button btn_Back, btn_Save, btn_Origin, btn_Eye, btn_Chin, btn_Whitening, btn_Blemish,
             btn_Crop, btn_Rotation, btn_Inversion, btn_Intensity, btn_Saturation, btn_Sharpening;
-       // 뒤로, 저장, 원본, 눈확대, 갸름하게, 미백, 잡티제거, 자르기, 회전, 역, 명도, 채도, 선명도
+    // 뒤로, 저장, 원본, 눈확대, 갸름하게, 미백, 잡티제거, 자르기, 회전, 역, 명도, 채도, 선명도
     String str;
     String photoPath;
     Bitmap originBitmap;
     Bitmap bitmap;
     Bitmap adjustedBitmap;
     private ImageView imgview;
+    SeekBar satBar;
+    int cnt_Intensity =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photoedit);
         imgview = (ImageView) findViewById(R.id.imageView);
+
+        satBar = (SeekBar) findViewById(R.id.satBar);
+        satBar.setVisibility(View.GONE);
+
         ColorWeight weight = (ColorWeight) getApplicationContext();
         if (weight.getWhich() == 1) {
             Intent intent = getIntent();
@@ -110,38 +122,43 @@ public class PhotoEdit extends Activity {
             }
         });
 
+        //눈키우기 픽셀유동화
         btn_Eye = (Button) findViewById(R.id.btn_Eye);
-        btn_Eye.setOnClickListener(new View.OnClickListener(){
+        btn_Eye.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
             }
         });
 
+        //턱을갸름하게 픽셀유동화
         btn_Chin = (Button) findViewById(R.id.btn_Chin);
-        btn_Chin.setOnClickListener(new View.OnClickListener(){
+        btn_Chin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
             }
         });
 
+        //미백효과
         btn_Whitening = (Button) findViewById(R.id.btn_Whitening);
-        btn_Whitening.setOnClickListener(new View.OnClickListener(){
+        btn_Whitening.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
             }
         });
 
+        //여드름제거
         btn_Blemish = (Button) findViewById(R.id.btn_Blemish);
-        btn_Blemish.setOnClickListener(new View.OnClickListener(){
+        btn_Blemish.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
             }
         });
 
+        //자르기
         btn_Crop = (Button) findViewById(R.id.btn_Crop);
         btn_Crop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +167,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
+        //회전
         btn_Rotation = (Button) findViewById(R.id.btn_Rotation);
         btn_Rotation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +181,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
+        //좌우반전
         btn_Inversion = (Button) findViewById(R.id.btn_Inversion);
         btn_Inversion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,31 +194,45 @@ public class PhotoEdit extends Activity {
             }
         });
 
+        //밝기조절
         btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
-        btn_Intensity.setOnClickListener(new View.OnClickListener(){
+        btn_Intensity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-
+            public void onClick(View v) {
+                satBar.setOnSeekBarChangeListener(seekBarChangeListener2);
+                satBar.setProgress(256);
+                cnt_Intensity = 0;
+                loadBitmapIntensity();
+                satBar.setVisibility(View.VISIBLE);
             }
         });
 
+        //채도조절
         btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
-        btn_Saturation.setOnClickListener(new View.OnClickListener(){
+        btn_Saturation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+                satBar.setOnSeekBarChangeListener(seekBarChangeListener);
+                satBar.setProgress(256);
+                loadBitmapSat();
+                satBar.setVisibility(View.VISIBLE);
             }
         });
 
+        //선명도조절
         btn_Sharpening = (Button) findViewById(R.id.btn_Sharpening);
-        btn_Sharpening.setOnClickListener(new View.OnClickListener(){
+        btn_Sharpening.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "찐따",
+                        Toast.LENGTH_LONG);
 
             }
         });
 
     }
 
+    //사진불러오기
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri imageUri = data.getData();
         try {
@@ -225,6 +258,7 @@ public class PhotoEdit extends Activity {
         }
     }
 
+    //비트맵회전
     private Bitmap imgRotate(Bitmap bmp) {
         int width = bmp.getWidth();
         int height = bmp.getHeight();
@@ -237,8 +271,122 @@ public class PhotoEdit extends Activity {
 
         return resizedBitmap;
     }
-
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    //채도 함수 : 비트맵
+    private void loadBitmapSat() {
+        if (bitmap != null) {
+            int progressSat = satBar.getProgress();
+
+            //Saturation, 0=gray-scale. 1=identity
+            float sat = (float) progressSat / 256;
+            //satText.setText("Saturation: " + String.valueOf(sat));
+            imgview.setImageBitmap(updateSat(bitmap, sat));
+        }
+    }
+
+    //밝기 함수 : 비트맵
+    private void loadBitmapIntensity(){
+        if(bitmap!=null){
+            int progressIntensity = satBar.getProgress();
+            float intensity;
+
+            if(cnt_Intensity == 0)
+            intensity = (float)progressIntensity/256;
+
+            else
+               intensity = (float)progressIntensity/8;
+
+            cnt_Intensity++;
+
+            imgview.setImageBitmap(updateIntenstiy(bitmap, intensity));
+        }
+    }
+// 채도 함수 : 채도 갱신
+    private Bitmap updateSat(Bitmap src, float settingSat) {
+
+        int w = src.getWidth();
+        int h = src.getHeight();
+
+        Bitmap bitmapResult =
+                Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas canvasResult = new Canvas(bitmapResult);
+        Paint paint = new Paint();
+        ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(settingSat);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+        paint.setColorFilter(filter);
+        canvasResult.drawBitmap(src, 0, 0, paint);
+
+        return bitmapResult;
+    }
+
+    //밝기값갱신
+    private Bitmap updateIntenstiy(Bitmap src, float settingIntensity) {
+        int w = src.getWidth();
+        int h = src.getHeight();
+
+        Bitmap bitmapResult =
+                Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int p = src.getPixel(i, j);
+                int r = Color.red(p);
+                int g = Color.green(p);
+                int b = Color.blue(p);
+                int alpha = Color.alpha(p);
+
+                r = (int)settingIntensity + r;
+                if (r >= 255)
+                    r = 255;
+
+                g = (int)settingIntensity + g;
+                if (g >= 255)
+                    g = 255;
+
+                b = (int)settingIntensity + b;
+                if (b >= 255)
+                    b = 255;
+                //alpha = 30 + alpha;
+                bitmapResult.setPixel(i, j, Color.argb(alpha, r, g, b));
+            }
+        }
+        return bitmapResult;
+    }
+
+//SEEKBAR 조절 함수
+    SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+                                      boolean fromUser) {
+            // TODO Auto-generated method stub
+        }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            loadBitmapSat();
+        }
+    };
+
+    SeekBar.OnSeekBarChangeListener seekBarChangeListener2 = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+                                      boolean fromUser) {
+            // TODO Auto-generated method stub
+        }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            loadBitmapIntensity();
+        }
+    };
 }
