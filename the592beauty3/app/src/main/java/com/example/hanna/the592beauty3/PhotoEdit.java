@@ -79,6 +79,7 @@ public class PhotoEdit extends Activity {
             }
         }
 
+        // 원래 사진으로 돌아가기
         btn_Origin = (Button) findViewById(R.id.btn_Origin);
         btn_Origin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +88,8 @@ public class PhotoEdit extends Activity {
                 bitmap = originBitmap;
             }
         });
+
+        // 뒤로
         btn_Back = (Button) findViewById(R.id.btn_Back);
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +98,8 @@ public class PhotoEdit extends Activity {
             }
         });
 
+
+        // 저장
         btn_Save = (Button) findViewById(R.id.btn_Save);
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +154,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //여드름제거
+        // 여드름제거
         btn_Blemish = (Button) findViewById(R.id.btn_Blemish);
         btn_Blemish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +163,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //자르기
+        // 자르기
         btn_Crop = (Button) findViewById(R.id.btn_Crop);
         btn_Crop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +172,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //회전
+        // 회전 _ 완료
         btn_Rotation = (Button) findViewById(R.id.btn_Rotation);
         btn_Rotation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +186,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //좌우반전
+        // 좌우반전 _ 완료
         btn_Inversion = (Button) findViewById(R.id.btn_Inversion);
         btn_Inversion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +199,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //밝기조절
+        // 밝기조절 _ 완료
         btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
         btn_Intensity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +212,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //채도조절
+        // 채도조절 _ 완료
         btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
         btn_Saturation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,7 +224,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //선명도조절
+        // 선명도조절
         btn_Sharpening = (Button) findViewById(R.id.btn_Sharpening);
         btn_Sharpening.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +237,7 @@ public class PhotoEdit extends Activity {
 
     }
 
-    //사진불러오기
+    // 사진불러오기
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri imageUri = data.getData();
         try {
@@ -258,7 +263,7 @@ public class PhotoEdit extends Activity {
         }
     }
 
-    //비트맵회전
+    // 비트맵회전
     private Bitmap imgRotate(Bitmap bmp) {
         int width = bmp.getWidth();
         int height = bmp.getHeight();
@@ -275,7 +280,7 @@ public class PhotoEdit extends Activity {
         super.onBackPressed();
     }
 
-    //채도 함수 : 비트맵
+    // 채도 함수 : 비트맵
     private void loadBitmapSat() {
         if (bitmap != null) {
             int progressSat = satBar.getProgress();
@@ -287,7 +292,7 @@ public class PhotoEdit extends Activity {
         }
     }
 
-    //밝기 함수 : 비트맵
+    // 밝기 함수 : 비트맵
     private void loadBitmapIntensity(){
         if(bitmap!=null){
             int progressIntensity = satBar.getProgress();
@@ -304,7 +309,7 @@ public class PhotoEdit extends Activity {
             imgview.setImageBitmap(updateIntenstiy(bitmap, intensity));
         }
     }
-// 채도 함수 : 채도 갱신
+    // 채도 함수 : 채도 갱신
     private Bitmap updateSat(Bitmap src, float settingSat) {
 
         int w = src.getWidth();
@@ -323,7 +328,7 @@ public class PhotoEdit extends Activity {
         return bitmapResult;
     }
 
-    //밝기값갱신
+    // 밝기값갱신
     private Bitmap updateIntenstiy(Bitmap src, float settingIntensity) {
         int w = src.getWidth();
         int h = src.getHeight();
@@ -357,7 +362,7 @@ public class PhotoEdit extends Activity {
         return bitmapResult;
     }
 
-//SEEKBAR 조절 함수
+    // SEEKBAR 조절 함수
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress,
