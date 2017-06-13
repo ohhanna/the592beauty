@@ -86,6 +86,7 @@ public class PhotoEdit extends Activity {
             public void onClick(View v) {
                 imgview.setImageBitmap(originBitmap);
                 bitmap = originBitmap;
+                satBar.setVisibility(View.INVISIBLE); // ProgressBar 없애기
             }
         });
 
@@ -94,6 +95,7 @@ public class PhotoEdit extends Activity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                satBar.setVisibility(View.INVISIBLE);
                 onBackPressed();
             }
         });
@@ -133,6 +135,7 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -142,6 +145,7 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -151,6 +155,7 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -160,6 +165,7 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -169,6 +175,8 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -183,6 +191,7 @@ public class PhotoEdit extends Activity {
 //                ((BitmapDrawable)imgview.getDrawable()).getBitmap().recycle();
                 imgview.setImageBitmap(rotateImage);
                 bitmap = rotateImage;
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -196,10 +205,11 @@ public class PhotoEdit extends Activity {
                 Bitmap inverseImage = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), sideInversion, false);
                 imgview.setImageBitmap(inverseImage);
                 bitmap = inverseImage;
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
-        // 밝기조절 _ 완료
+        // 밝기조절 _
         btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
         btn_Intensity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +222,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 채도조절 _ 완료
+        // 채도조절 _
         btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
         btn_Saturation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,6 +242,7 @@ public class PhotoEdit extends Activity {
                 Toast.makeText(getApplicationContext(), "찐따",
                         Toast.LENGTH_LONG);
 
+                satBar.setVisibility(View.INVISIBLE);
             }
         });
 
