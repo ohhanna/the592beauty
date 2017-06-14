@@ -129,7 +129,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //눈키우기 픽셀유동화
+        //눈키우기 픽셀유동화 _ none
         btn_Eye = (Button) findViewById(R.id.btn_Eye);
         btn_Eye.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +139,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //턱을갸름하게 픽셀유동화
+        //턱을갸름하게 픽셀유동화 _ none
         btn_Chin = (Button) findViewById(R.id.btn_Chin);
         btn_Chin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +149,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //미백효과
+        //미백효과 _ none
         btn_Whitening = (Button) findViewById(R.id.btn_Whitening);
         btn_Whitening.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +159,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 여드름제거
+        // 여드름제거 _ none
         btn_Blemish = (Button) findViewById(R.id.btn_Blemish);
         btn_Blemish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +169,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 자르기
+        // 자르기 _ none
         btn_Crop = (Button) findViewById(R.id.btn_Crop);
         btn_Crop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +180,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 회전 _ 완료
+        // 회전 _ fin
         btn_Rotation = (Button) findViewById(R.id.btn_Rotation);
         btn_Rotation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +195,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 좌우반전 _ 완료
+        // 좌우반전 _ fin
         btn_Inversion = (Button) findViewById(R.id.btn_Inversion);
         btn_Inversion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +209,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 밝기조절 _
+        // 밝기조절 _ 적용X
         btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
         btn_Intensity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +222,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 채도조절 _
+        // 채도조절 _ 적용X
         btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
         btn_Saturation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,7 +234,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 선명도조절
+        // 선명도조절 _ none
         btn_Sharpening = (Button) findViewById(R.id.btn_Sharpening);
         btn_Sharpening.setOnClickListener(new View.OnClickListener() {
             @Override
