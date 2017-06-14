@@ -303,7 +303,7 @@ public class PhotoEdit extends Activity {
         }
     }
 
-    // 밝기 함수 : 비트맵
+    // 밝기 함수 : 비트맵 _fin
     private void loadBitmapIntensity(){
         if(bitmap!=null){
             int progressIntensity = satBar.getProgress();
@@ -339,38 +339,25 @@ public class PhotoEdit extends Activity {
         return bitmapResult;
     }
 
-    // 밝기값갱신
-    private Bitmap updateIntenstiy(Bitmap src, float settingIntensity) {
-        int w = src.getWidth();
-        int h = src.getHeight();
+    // 밝기값갱신 _fin
+    private Bitmap updateIntenstiy(Bitmap src, float brightness) {
+        ColorMatrix cm = new ColorMatrix(new float[]
+                {
+                        1, 0, 0, 0, brightness,
+                        0, 1, 0, 0, brightness,
+                        0, 0, 1, 0, brightness,
+                        0, 0, 0, 1, 0
+                });
 
-        Bitmap bitmapResult =
-                Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Bitmap ret = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
 
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                int p = src.getPixel(i, j);
-                int r = Color.red(p);
-                int g = Color.green(p);
-                int b = Color.blue(p);
-                int alpha = Color.alpha(p);
+        Canvas canvas = new Canvas(ret);
 
-                r = (int)settingIntensity + r;
-                if (r >= 255)
-                    r = 255;
+        Paint paint = new Paint();
+        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+        canvas.drawBitmap(src, 0, 0, paint);
 
-                g = (int)settingIntensity + g;
-                if (g >= 255)
-                    g = 255;
-
-                b = (int)settingIntensity + b;
-                if (b >= 255)
-                    b = 255;
-                //alpha = 30 + alpha;
-                bitmapResult.setPixel(i, j, Color.argb(alpha, r, g, b));
-            }
-        }
-        return bitmapResult;
+        return ret;
     }
 
     // SEEKBAR 조절 함수
