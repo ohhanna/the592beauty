@@ -19,7 +19,8 @@ public class Spring extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spring);
-
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        weight.setTone("spring");
         bNext = (Button)findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener(){
             @Override

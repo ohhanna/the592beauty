@@ -19,7 +19,8 @@ public class Winter extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winter);
-
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        weight.setTone("winter");
         bNext = (Button)findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener(){
             @Override

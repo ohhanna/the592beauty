@@ -32,11 +32,11 @@
         <activity android:name = ".Winter"/>
         <activity android:name= ".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserAreaActivity"/>
         <activity android:name=".PhotoEdit" />
         <activity android:name=".PhotoActivity"/>
         <activity android:name=".CameraActivity"/>
         <activity android:name=".upload_photo"/>
+        <activity android:name=".UserAreaActivity"/>
 
     </application>
 

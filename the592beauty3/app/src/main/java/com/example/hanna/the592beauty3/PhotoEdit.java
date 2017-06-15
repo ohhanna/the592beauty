@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
@@ -14,6 +13,10 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicConvolve3x3;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -149,7 +152,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        //미백효과 _ none
+        // 미백효과 _ none
         btn_Whitening = (Button) findViewById(R.id.btn_Whitening);
         btn_Whitening.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +162,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 여드름제거 _ none
+        // 피부 _ none
         btn_Blemish = (Button) findViewById(R.id.btn_Blemish);
         btn_Blemish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +212,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 밝기조절 _ 적용X
+        // 밝기조절 _ fin
         btn_Intensity = (Button) findViewById(R.id.btn_Intensity);
         btn_Intensity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +225,7 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 채도조절 _ 적용X
+        // 채도조절 _ fin
         btn_Saturation = (Button) findViewById(R.id.btn_Saturation);
         btn_Saturation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,18 +237,43 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 선명도조절 _ none
+        // 선명도조절 _ none (세모)
         btn_Sharpening = (Button) findViewById(R.id.btn_Sharpening);
         btn_Sharpening.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "찐따",
-                        Toast.LENGTH_LONG);
-
-                satBar.setVisibility(View.INVISIBLE);
+                Bitmap bitmapSharpen = createBitmap_convolve(bitmap, matrix_sharpen);
+                imgview.setImageBitmap(bitmapSharpen);
+                bitmap = bitmapSharpen;
+//                satBar.setOnSeekBarChangeListener(seekBarChangeListener2);
+//                satBar.setProgress(256);
+//                cnt_Intensity = 0;
+//                loadBitmapSharpen();
+//                satBar.setVisibility(View.VISIBLE);
             }
         });
 
+    }
+    float[] matrix_sharpen =
+            { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
+    private Bitmap createBitmap_convolve(Bitmap src, float[] coefficients) {
+
+        Bitmap result = Bitmap.createBitmap(src.getWidth(),
+                src.getHeight(), src.getConfig());
+
+        RenderScript renderScript = RenderScript.create(this);
+
+        Allocation input = Allocation.createFromBitmap(renderScript, src);
+        Allocation output = Allocation.createFromBitmap(renderScript, result);
+
+        ScriptIntrinsicConvolve3x3 convolution = ScriptIntrinsicConvolve3x3
+                .create(renderScript, Element.U8_4(renderScript));
+        convolution.setInput(input);
+        convolution.setCoefficients(coefficients);
+        convolution.forEach(output);
+
+        output.copyTo(result);
+        renderScript.destroy();
+        return result;
     }
 
     // 사진불러오기
@@ -291,7 +319,7 @@ public class PhotoEdit extends Activity {
         super.onBackPressed();
     }
 
-    // 채도 함수 : 비트맵
+    // 채도 함수 : 비트맵 _ fin
     private void loadBitmapSat() {
         if (bitmap != null) {
             int progressSat = satBar.getProgress();
@@ -320,7 +348,7 @@ public class PhotoEdit extends Activity {
             imgview.setImageBitmap(updateIntenstiy(bitmap, intensity));
         }
     }
-    // 채도 함수 : 채도 갱신
+    // 채도 함수 : 채도 갱신 _ fin
     private Bitmap updateSat(Bitmap src, float settingSat) {
 
         int w = src.getWidth();
@@ -336,7 +364,8 @@ public class PhotoEdit extends Activity {
         paint.setColorFilter(filter);
         canvasResult.drawBitmap(src, 0, 0, paint);
 
-        return bitmapResult;
+        bitmap = bitmapResult;
+        return bitmap;
     }
 
     // 밝기값갱신 _fin
@@ -357,7 +386,8 @@ public class PhotoEdit extends Activity {
         paint.setColorFilter(new ColorMatrixColorFilter(cm));
         canvas.drawBitmap(src, 0, 0, paint);
 
-        return ret;
+        bitmap = ret;
+        return bitmap;
     }
 
     // SEEKBAR 조절 함수
