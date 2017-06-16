@@ -11,7 +11,7 @@ public class RegisterRequest extends StringRequest {
     private static final String REGISTER_REQUEST_URL = "https://phreshout999.000webhostapp.com/Register2.php";
     private Map<String, String> params;
 
-    public RegisterRequest(String ID, String Name, String Password, Response.Listener<String> listener){
+    public RegisterRequest(String ID, String Password, String Name, Response.Listener<String> listener){
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("ID", ID);

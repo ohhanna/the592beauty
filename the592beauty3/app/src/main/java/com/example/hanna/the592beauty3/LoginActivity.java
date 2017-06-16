@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.hanna.the592beauty3.R.styleable.AlertDialog;
+
 public class LoginActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,15 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
+                finish();
             }
         });
 
         bLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                final String ID = etID.getText().toString();
-                final String Password = etPassword.getText().toString();
+                final String eID = etID.getText().toString();
+                final String ePassword = etPassword.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -58,9 +61,10 @@ public class LoginActivity extends Activity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            //php파일참조
+                            // php파일참조
 
                             if (success) {
+                                String ID = jsonResponse.getString("ID");
                                 String Name = jsonResponse.getString("Name");
                                 //JsonResponse로 받아오기 이름, 유저이름, 나이
 
@@ -70,6 +74,7 @@ public class LoginActivity extends Activity {
                                 //UserAreaActivity로 데이터 전송
 
                                 LoginActivity.this.startActivity(intent);
+                                finish();
                                 //인텐트준것시작
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -81,13 +86,18 @@ public class LoginActivity extends Activity {
                         }
                     }
                 };
-                LoginRequest loginRequest = new LoginRequest(ID, Password, responseListener);
+                LoginRequest loginRequest = new LoginRequest(eID, ePassword, responseListener);
 
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
-                //큐에 더하기위해서 레지스터액티비티에 있는것 복붙해서 불러와!
+                // 큐에 더하기위해서 레지스터액티비티에 있는것 복붙해서 불러와!
             }
 
         });
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

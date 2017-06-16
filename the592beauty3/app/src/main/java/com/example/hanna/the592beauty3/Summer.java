@@ -19,7 +19,8 @@ public class Summer  extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summer);
-
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        weight.setTone("summer");
         bNext = (Button)findViewById(R.id.bNext);
         bNext.setOnClickListener(new View.OnClickListener(){
             @Override

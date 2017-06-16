@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.hanna.the592beauty3.R.styleable.AlertDialog;
+
 
 public class RegisterActivity extends Activity {
 
@@ -30,7 +32,7 @@ public class RegisterActivity extends Activity {
         final Button bCheck = (Button) findViewById(R.id.bCheck);
         bCheck.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v){    // 중복여부 체크해야됨
                 Toast.makeText(getApplicationContext(), "사용할 수 있는 ID입니다", Toast.LENGTH_SHORT).show();
             }
         });
@@ -62,10 +64,15 @@ public class RegisterActivity extends Activity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(ID, Name, Password, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(ID, Password, Name, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
         });
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

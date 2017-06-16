@@ -16,6 +16,9 @@ public class ColorWeight extends Application {
     private int tw;
     private int which;
     private int back;
+    private String username;
+    private String id;
+    private String tone;
 
     @Override
     public void onCreate() {
@@ -28,6 +31,9 @@ public class ColorWeight extends Application {
         tempc = 0;
         tempw = 0;
         tw=0;
+        username = null;
+        id = null;
+        tone = null;
         super.onCreate();
     }
 
@@ -47,6 +53,19 @@ public class ColorWeight extends Application {
     public void setTw(int tw){
         this.tw=tw;
     }
+    public void initAll(){
+        cool = 0;
+        warm = 0;
+        weight = 0;
+        which = 0;
+        back = 0;
+        tempc = 0;
+        tempw = 0;
+        tw=0;
+        username = null;
+        id = null;
+        tone = null;
+    }
     public void init() {
         this.cool = 0;
         this.warm = 0;
@@ -54,23 +73,24 @@ public class ColorWeight extends Application {
         this.which = 0;
         this.back = 0;
     }
+
     public void setCool(int cool) {
         this.cool = cool;
     }
-
     public void setWarm(int warm) {
         this.warm = warm;
     }
-
     public void setWeight(int weight) {
         this.weight = weight;
     }
-
     public void setWhich(int which) {
         this.which = which;
     }
-
     public void setBack(int back) {this.back = back; }
+
+    public void setUsername(String name) {this.username = name; }
+    public void setId(String id) {this.id = id; }
+    public void setTone(String tone) {this.tone = tone;}
 
     public int getCool() {
         return cool;
@@ -89,4 +109,9 @@ public class ColorWeight extends Application {
         return which;
     }
     public int getBack() { return back; }
+
+    public String getUsername() { return username;}
+    public String getId() {return id;}
+    public String getTone() { return tone;}
+
 }

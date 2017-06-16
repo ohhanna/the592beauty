@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -31,7 +32,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ColorWeight weight = (ColorWeight) getApplicationContext();
+        final TextView usernameT = (TextView) findViewById(R.id.username);
         weight.init();
+        String user = weight.getUsername();
+        if (user != null)
+        usernameT.setText(user);
+
         button_beautyphoto = (Button)findViewById(R.id.button_beautyphoto);
         button_beautyphoto.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -65,8 +71,15 @@ public class MainActivity extends Activity {
         button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent2);
+                if(weight.getUsername() == null){
+                    Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent2);
+                }
+                else {
+                    Intent intent2 = new Intent(MainActivity.this, UserAreaActivity.class);
+                    startActivity(intent2);
+                }
+                finish();
             }
         });
     }
@@ -102,5 +115,10 @@ public class MainActivity extends Activity {
                 return builder.create();
         }
         return super.onCreateDialog(id);
+    }
+    public void onBackPressed() {
+        ColorWeight weight = (ColorWeight) getApplicationContext();
+        weight.initAll();
+        finish();
     }
 }
