@@ -1,39 +1,38 @@
 package com.example.layla.pixelfluidprac;
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
 //with small sample image
 public class MainActivity extends Activity {
+    int WIDTH = 20;
+    int HEIGHT = 20;
+    int COUNT = (WIDTH + 1) * (HEIGHT + 1);
 
+    float[] mVerts = new float[COUNT * 2];
+    float[] mOrig = new float[COUNT * 2];
+    Bitmap mBitmap;
+    Matrix mMatrix = new Matrix();
+    Matrix mInverse = new Matrix();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new SampleView(this));
+
     }
 
-    private static class SampleView extends View {
-        private static final int WIDTH = 20;
-        private static final int HEIGHT = 20;
-        private static final int COUNT = (WIDTH + 1) * (HEIGHT + 1);
+    void setXY(float[] array, int index, float x, float y) {
+        array[index * 2 + 0] = x;
+        array[index * 2 + 1] = y;
+    }
 
-        private final Bitmap mBitmap;
-        private final float[] mVerts = new float[COUNT * 2];
-        private final float[] mOrig = new float[COUNT * 2];
-
-        private final Matrix mMatrix = new Matrix();
-        private final Matrix mInverse = new Matrix();
-
-        private static void setXY(float[] array, int index, float x, float y) {
-            array[index * 2 + 0] = x;
-            array[index * 2 + 1] = y;
-        }
+    private class SampleView extends View {
 
         public SampleView(Context context) {
             super(context);
@@ -65,8 +64,12 @@ public class MainActivity extends Activity {
             canvas.drawColor(0xFFCCCCCC);
 
             canvas.concat(mMatrix);
+            warp(300,300);
+
             canvas.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0,
                     null);
+
+
         }
 
         private void warp(float cx, float cy) {
@@ -91,7 +94,7 @@ public class MainActivity extends Activity {
                     dst[i + 1] = cy;
                 } else {
                     dst[i + 0] = x + dx * pull;
-                    dst[i + 1] = y + dy * pull;
+                    dst[i + 1] = y;//+ dy * pull;
                 }
             }
 
