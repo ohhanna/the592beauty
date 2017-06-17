@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView ;
 
+    int warpcount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
         int h;
         int w;
 
-  /*      FaceDetector faceDetector = new
+        FaceDetector faceDetector = new
                 FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
 
         Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
         SparseArray<Face> faces = faceDetector.detect(frame);
-*/
+
         h = myBitmap.getHeight();
         w = myBitmap.getWidth();
 
@@ -84,58 +85,74 @@ public class MainActivity extends AppCompatActivity {
         //mMatrix.setTranslate(10, 10);
         mMatrix.invert(mInverse);
 
-        //int landmark_count = 0;
+        int landmark_count = 0;
         //랜드마크 찾기
-        /*
+
+        int lefteyex = 0;
+        int lefteyey = 0;
+        int righteyex = 0;
+        int righteyey = 0;
+
         for(int i=0; i<faces.size(); i++){
             Face face = faces.valueAt(i);
             for(Landmark landmark : face.getLandmarks()){
                 int cx = (int)(landmark.getPosition().x);
                 int cy = (int)(landmark.getPosition().y);
                 landmark_count++;
-                if(landmark_count==2) {
-                    textView.setText(" x: " + cx + "y : " + cy);
+
+                if(landmark_count==1 ) {
+                    lefteyex = cx;
+                    lefteyey = cy;
                 }
-                tempCanvas.drawCircle(cx, cy, 5, paint);
+                if(landmark_count==2){
+                    righteyex = cx;
+                    righteyey = cy;
+                }
+
             }
         }
-*/
+
         imageView.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
 
+//bb사진 : 왼쪽눈좌표(796, 321) / 오른쪽눈좌표 (933, 311)
         tempCanvas.concat(mMatrix);
         //왼쪽눈좌표
-        warp(796,321);
+        warp(lefteyex,lefteyey);
+        warpcount++;
+        tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+        warp(righteyex, righteyey);
+        warpcount++;
         tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
 
     }
 
     //warp함수 : pixelfluid
     void warp(float cx, float cy) {
-        final float K = 10000;
+        final float K = 15000;
         float[] src = mOrig;
         float[] dst = mVerts;
+
+        if(warpcount!=0){
+            src = mVerts;
+        }
+
         for (int i = 0; i < COUNT * 2; i += 2) {
             float x = src[i + 0];
             float y = src[i + 1];
             float dx = cx - x;
             float dy = cy - y;
             float dd = dx * dx + dy * dy;
-
             float d = (float)Math.sqrt(dd);
-
             float pull = K / (dd + 0.000001f);
-
             pull /= (d + 0.000001f);
 
-            // android.util.Log.d("skia", "index " + i + " dist=" + d +
-            // " pull=" + pull);
-            if (pull >= 1 ) {
+            if (pull >= 1.5 ) {
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             } else
-                dst[i+0] = x-dx*pull;
-                dst[i+1] = y-dy*pull;
-                }
+                dst[i+0] = x-2*dx*pull;
+                dst[i+1] = y-2*dy*pull;
+        }
     }
 
     // XY축 정하기 : pixelfluid
