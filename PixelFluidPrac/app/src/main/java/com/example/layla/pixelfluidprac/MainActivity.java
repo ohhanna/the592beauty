@@ -8,12 +8,13 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-
+//이미지뷰로 바꿔야함!
 //with small sample image
 public class MainActivity extends Activity {
     int WIDTH = 20;
     int HEIGHT = 20;
     int COUNT = (WIDTH + 1) * (HEIGHT + 1);
+    int warpcount =0;
 
     float[] mVerts = new float[COUNT * 2];
     float[] mOrig = new float[COUNT * 2];
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
             setFocusable(true);
 
             mBitmap = BitmapFactory.decodeResource(getResources(),
-                    R.drawable.dd);
+                    R.drawable.cc);
 
             float w = mBitmap.getWidth();
             float h = mBitmap.getHeight();
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
                 }
             }
 
-            mMatrix.setTranslate(10, 10);
+            //mMatrix.setTranslate(10, 10);
             mMatrix.invert(mInverse);
         }
 
@@ -64,18 +65,18 @@ public class MainActivity extends Activity {
             canvas.drawColor(0xFFCCCCCC);
 
             canvas.concat(mMatrix);
-            warp(300,300);
-
             canvas.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0,
                     null);
-
-
         }
-
+//지금이건 갸름하게효과!
         private void warp(float cx, float cy) {
             final float K = 10000;
             float[] src = mOrig;
             float[] dst = mVerts;
+
+            if(warpcount!=0)
+                src = mVerts;
+
             for (int i = 0; i < COUNT * 2; i += 2) {
                 float x = src[i + 0];
                 float y = src[i + 1];
@@ -94,10 +95,15 @@ public class MainActivity extends Activity {
                     dst[i + 1] = cy;
                 } else {
                     dst[i + 0] = x + dx * pull;
-                    dst[i + 1] = y;//+ dy * pull;
+                    //dst[i + 0] = x - dx * pull; 로 쓰면 확대
+
+                    dst[i + 1] = y+ (int) 0.3 * dy * pull;
+                    //dst[i + 1] = y - (int) 0.3 * dy * pull; 로 쓰면 확대
+
                 }
             }
 
+            warpcount++;
         }
 
         private int mLastWarpX = -9999; // don't match a touch coordinate
