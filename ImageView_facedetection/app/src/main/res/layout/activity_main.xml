@@ -12,4 +12,13 @@
         android:layout_height="300dp"
         app:srcCompat="@android:color/background_light"
          />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp"
+        android:text="TextView" />
 </RelativeLayout>
