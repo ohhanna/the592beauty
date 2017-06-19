@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,11 +19,17 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicConvolve3x3;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
+import com.google.android.gms.vision.face.Landmark;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -41,6 +49,16 @@ public class PhotoEdit extends Activity {
     private ImageView imgview;
     SeekBar satBar;
     int cnt_Intensity =0;
+
+    // 픽셀유동화 관련 변수
+    int WIDTH = 20;
+    int HEIGHT = 20;
+    int COUNT = (WIDTH + 1) * (HEIGHT + 1);
+    float[] mVerts = new float[COUNT * 2];
+    float[] mOrig = new float[COUNT * 2];
+    Matrix mMatrix = new Matrix();
+    Matrix mInverse = new Matrix();
+    int warpcount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +156,85 @@ public class PhotoEdit extends Activity {
             @Override
             public void onClick(View v) {
 
+                Paint paint = new Paint();
+                paint.setColor(Color.GREEN);
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(5);
+
+                Bitmap eyeBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
+                Canvas eyeCanvas = new Canvas(eyeBitmap);
+                eyeCanvas.drawBitmap(bitmap, 0, 0, null);
+
+                int h; // 높이
+                int w; // 너비
+
+                FaceDetector faceDetector = new
+                        FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
+
+                Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                SparseArray<Face> faces = faceDetector.detect(frame);
+
+                h = bitmap.getHeight();
+                w = bitmap.getWidth();
+
+                // MeshGrid , 그물 쳐주기
+                int index = 0;
+                for (int y = 0; y <= HEIGHT; y++){
+                    float fy = h * y / HEIGHT;
+                    for (int x = 0; x <= WIDTH; x++){
+                        float fx = w * x / WIDTH;
+                        setXY(mVerts, index, fx, fy); // 밑에 함수
+                        setXY(mOrig, index, fx, fy);
+                        index += 1;
+                    }
+                }
+                //mMatrix.setTranslate(10, 10);
+                mMatrix.invert(mInverse);
+
+                // ↓눈찾기
+                int landmark_count = 0;
+
+                int lefteyex = 0;
+                int lefteyey = 0;
+
+                int righteyex = 0;
+                int righteyey = 0;
+
+                for (int i = 0; i<faces.size(); i++){
+                    Face face = faces.valueAt(i);
+                    for(Landmark landmark : face.getLandmarks()){
+                        int cx = (int)(landmark.getPosition().x);
+                        int cy = (int)(landmark.getPosition().y);
+                        landmark_count++;
+
+                        if(landmark_count == 1) {
+                            lefteyex = cx;
+                            lefteyey = cy;
+                        }
+                        if(landmark_count == 2) {
+                            righteyex = cx;
+                            righteyey = cy;
+                        }
+                    }
+                }
+
+                imgview.setImageDrawable(new BitmapDrawable(getResources(), eyeBitmap));
+
+                eyeCanvas.concat(mMatrix);
+
+                // warp _ 눈 키워주기
+
+                warp(lefteyex, lefteyey);
+                warpcount++;
+                eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+
+//                warp(righteyex, righteyey);
+//                warpcount++;
+//                eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+
+                imgview.setImageBitmap(eyeBitmap);
+                bitmap = eyeBitmap;
+
                 satBar.setVisibility(View.INVISIBLE);
             }
         });
@@ -172,16 +269,14 @@ public class PhotoEdit extends Activity {
             }
         });
 
-        // 자르기 _ none
-        btn_Crop = (Button) findViewById(R.id.btn_Crop);
-        btn_Crop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                satBar.setVisibility(View.INVISIBLE);
-            }
-        });
+//        // 자르기 _ none
+//        btn_Crop = (Button) findViewById(R.id.btn_Crop);
+//        btn_Crop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                satBar.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
         // 회전 _ fin
         btn_Rotation = (Button) findViewById(R.id.btn_Rotation);
@@ -253,6 +348,44 @@ public class PhotoEdit extends Activity {
         });
 
     }
+
+    // eye _ warp 함수 : pixelfluid
+    void warp(float cx, float cy){
+        final float K = 15000;
+        float[] src = mOrig;
+        float[] dst = mVerts;
+
+        if(warpcount != 0){
+            src = mVerts;
+        }
+
+        for(int i = 0; i < COUNT * 2; i += 2){
+            float x = src[i+0];
+            float y = src[i+1];
+            float dx = cx - x;
+            float dy = cy - y;
+            float dd = dx*dx + dy*dy;
+            float d = (float)Math.sqrt(dd);
+            float pull = K / (dd + 0.1f); // pull : 밀어주는 정도,,,
+            pull /= (d + 0.1f);
+
+            if( pull >= 1.0 ) {
+                dst[i + 0] = cx;
+                dst[i + 1] = cy;
+            }
+            else {
+                dst[i + 0] = x - 0 * dx * pull;
+                dst[i + 1] = y - 0 * dy * pull;
+            }
+        }
+    }
+
+    // eye _ XY축 정하기 : pixelfluid // 축그리기
+    void setXY(float[] array, int index, float x, float y){
+        array[index * 2 + 0] = x;
+        array[index * 2 + 1] = y;
+    }
+
     float[] matrix_sharpen =
             { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
     private Bitmap createBitmap_convolve(Bitmap src, float[] coefficients) {

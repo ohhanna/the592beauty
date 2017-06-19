@@ -66,56 +66,56 @@
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text="  Eye  | " />
+                android:text="  Eye  |" />
 
             <Button
                 android:id="@+id/btn_Chin"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text="Chin  |" />
+                android:text="Chin    |" />
 
             <Button
                 android:id="@+id/btn_Blemish"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text="Blemish  |" />
+                android:text="Blemish    |" />
 
             <Button
                 android:id="@+id/btn_Whitening"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text="Whitening  |" />
+                android:text="Whitening    |" />
 
-            <Button
-                android:id="@+id/btn_Crop"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:background="#00ff0000"
-                android:text="Crop  |" />
+            <!--<Button-->
+                <!--android:id="@+id/btn_Crop"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#00ff0000"-->
+                <!--android:text="Crop  |" />-->
 
             <Button
                 android:id="@+id/btn_Rotation"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text="Rotation  |" />
+                android:text="Rotation    |" />
 
             <Button
                 android:id="@+id/btn_Inversion"
                 android:layout_width="95dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text=" Inversion  |" />
+                android:text=" Inversion    |" />
 
             <Button
                 android:id="@+id/btn_Intensity"
-                android:layout_width="90dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text=" Intensity  |" />
+                android:text=" Intensity    |" />
 
             <android.support.v7.widget.AppCompatSeekBar
                 android:layout_width="wrap_content"
@@ -124,10 +124,10 @@
 
             <Button
                 android:id="@+id/btn_Saturation"
-                android:layout_width="110dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff0000"
-                android:text=" Saturation  |" />
+                android:text=" Saturation    |" />
 
             <Button
                 android:id="@+id/btn_Sharpening"
