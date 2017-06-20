@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 //이미지뷰로 바꿔야함!
 //with small sample image
+
 public class MainActivity extends Activity {
     int WIDTH = 20;
     int HEIGHT = 20;
@@ -25,7 +26,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new SampleView(this));
-
     }
 
     void setXY(float[] array, int index, float x, float y) {

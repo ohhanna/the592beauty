@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.gms.vision.Frame;
@@ -30,100 +32,116 @@ public class MainActivity extends AppCompatActivity {
 
     int warpcount = 0;
 
+    Button button;
+    ImageView imageView;
+    Bitmap myBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
-        Bitmap myBitmap = BitmapFactory.decodeResource(
+        myBitmap = BitmapFactory.decodeResource(
                 getApplicationContext().getResources(),
-                R.drawable.ee,
+                R.drawable.cc,
                 options);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView); // imgview
+        imageView = (ImageView) findViewById(R.id.imageView); // imgview
+        imageView.setImageBitmap(myBitmap);
 
-        //paint 색 지정 - 눈 위치 제대로 잡았는 지 확인하려고 넣은 거 - 지워도 됨
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5);
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //paint 색 지정 - 눈 위치 제대로 잡았는 지 확인하려고 넣은 거 - 지워도 됨
+                Paint paint = new Paint();
+                paint.setColor(Color.GREEN);
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(5);
 
-        //임시로 쓸 비트맵과 캔버스 생성 : 캔버스에는 mybitmap을 넣음 - 혹시 모르니까 다 넣으셈
-        Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
-        // tempBitmap = > eyeBitmap
-        Canvas tempCanvas = new Canvas(tempBitmap); // tempCanvas => eyeCanvas
-        tempCanvas.drawBitmap(myBitmap,0, 0, null);
+                //임시로 쓸 비트맵과 캔버스 생성 : 캔버스에는 mybitmap을 넣음 - 혹시 모르니까 다 넣으셈
+                Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
+                // tempBitmap = > eyeBitmap
+                Canvas tempCanvas = new Canvas(tempBitmap); // tempCanvas => eyeCanvas
+                tempCanvas.drawBitmap(myBitmap,0, 0, null);
 
-        int h; // 높이
-        int w; // 너비
+                int h; // 높이
+                int w; // 너비
 
-        // 얼굴을 찾기
-        FaceDetector faceDetector = new
-                FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
+                // 얼굴을 찾기
+                FaceDetector faceDetector = new
+                        FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
 
-        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
-        SparseArray<Face> faces = faceDetector.detect(frame);
+                Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
+                SparseArray<Face> faces = faceDetector.detect(frame);
 
-        h = myBitmap.getHeight();
-        w = myBitmap.getWidth();
+                h = myBitmap.getHeight();
+                w = myBitmap.getWidth();
 
-        // meshgrid.. 픽셀유동화하기 위해서 그물쳐주는 거 , 꼭 넣기
-        int index = 0;
-        for (int y = 0; y <= HEIGHT; y++) {
-            float fy = h * y / HEIGHT;
-            for (int x = 0; x <= WIDTH; x++) {
-                float fx = w * x / WIDTH;
-                setXY(mVerts, index, fx, fy); // 밑에 함수 있음
-                setXY(mOrig, index, fx, fy);
-                index += 1;
-            }
-        }
-        //mMatrix.setTranslate(10, 10);
-        mMatrix.invert(mInverse);
-
-        // 아래로, 눈 찾는 것
-        int landmark_count = 0;
-        //랜드마크 찾기
-
-        int lefteyex = 0;
-        int lefteyey = 0;
-        int righteyex = 0;
-        int righteyey = 0;
-
-        for(int i=0; i<faces.size(); i++){
-            Face face = faces.valueAt(i);
-            for(Landmark landmark : face.getLandmarks()){
-                int cx = (int)(landmark.getPosition().x);
-                int cy = (int)(landmark.getPosition().y);
-                landmark_count++;
-
-                if(landmark_count==1 ) {
-                    lefteyex = cx;
-                    lefteyey = cy;
+                // meshgrid.. 픽셀유동화하기 위해서 그물쳐주는 거 , 꼭 넣기
+                int index = 0;
+                for (int y = 0; y <= HEIGHT; y++) {
+                    float fy = h * y / HEIGHT;
+                    for (int x = 0; x <= WIDTH; x++) {
+                        float fx = w * x / WIDTH;
+                        setXY(mVerts, index, fx, fy); // 밑에 함수 있음
+                        setXY(mOrig, index, fx, fy);
+                        index += 1;
+                    }
                 }
-                if(landmark_count==2){
-                    righteyex = cx;
-                    righteyey = cy;
+                //mMatrix.setTranslate(10, 10);
+                mMatrix.invert(mInverse);
+
+                // 아래로, 눈 찾는 것
+                int landmark_count = 0;
+                //랜드마크 찾기
+
+                int lefteyex = 0;
+                int lefteyey = 0;
+                int righteyex = 0;
+                int righteyey = 0;
+
+                for(int i=0; i<faces.size(); i++){
+                    Face face = faces.valueAt(i);
+                    for(Landmark landmark : face.getLandmarks()){
+                        int cx = (int)(landmark.getPosition().x);
+                        int cy = (int)(landmark.getPosition().y);
+                        landmark_count++;
+
+                        if(landmark_count==1 ) {
+                            lefteyex = cx;
+                            lefteyey = cy;
+                        }
+                        if(landmark_count==2){
+                            righteyex = cx;
+                            righteyey = cy;
+                        }
+
+                    }
                 }
 
+                // 이미지뷰에 뭐 해주는 건데 일단 넣기
+                imageView.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
+
+                //bb사진 : 왼쪽눈좌표(796, 321) / 오른쪽눈좌표 (933, 311)
+
+                tempCanvas.concat(mMatrix);
+                //왼쪽눈좌표
+                // warp로 눈 키워주기
+                warp(lefteyex,lefteyey); // 픽셀 움직이는 함수
+                warpcount++;
+                tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+                warp(righteyex, righteyey);
+                warpcount++;
+                tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+
+                imageView.setImageBitmap(tempBitmap);
+
             }
-        }
+        });
 
-        // 이미지뷰에 뭐 해주는 건데 일단 넣기
-        imageView.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
 
-//bb사진 : 왼쪽눈좌표(796, 321) / 오른쪽눈좌표 (933, 311)
-
-        tempCanvas.concat(mMatrix);
-        //왼쪽눈좌표
-        // warp로 눈 키워주기
-        warp(lefteyex,lefteyey); // 픽셀 움직이는 함수
-        warpcount++;
-        tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-//        warp(righteyex, righteyey);
-//        warpcount++;
-//        tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
 
     }
 
@@ -147,12 +165,12 @@ public class MainActivity extends AppCompatActivity {
             float pull = K / (dd + 0.000001f); // pull : 밀어주는 정도의 느낌,,
             pull /= (d + 0.000001f);
 
-            if (pull >= 1.5 ) { // 거리가 ~보다 크면 이동x, 1.5보다 아래면 이동o // 거리를 우리가 적절하게 조정해야됨
+            if (pull >= 1.0 ) { // 거리가 ~보다 크면 이동x, 1.5보다 아래면 이동o // 거리를 우리가 적절하게 조정해야됨
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             } else
-                dst[i+0] = x-2*dx*pull; // 숫자를 키우면 눈 커지는 게 커짐.. // 적절하게 숫자 조정해야됨 // -하면 눈이 커지고, +하면 눈이 작아짐 -> 갸름하게는 +하고 눈 키우는 거는 -로 해주기
-                dst[i+1] = y-2*dy*pull; // dst자체는 커지는 영역을 조정
+                dst[i+0] = x-1*dx*pull; // 숫자를 키우면 눈 커지는 게 커짐.. // 적절하게 숫자 조정해야됨 // -하면 눈이 커지고, +하면 눈이 작아짐 -> 갸름하게는 +하고 눈 키우는 거는 -로 해주기
+                dst[i+1] = y-1*dy*pull; // dst자체는 커지는 영역을 조정
         }
     }
 

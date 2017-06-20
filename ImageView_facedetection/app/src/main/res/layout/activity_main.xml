@@ -13,4 +13,13 @@
         app:srcCompat="@android:color/background_light"
          />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Eye Enlarge"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
+
 </RelativeLayout>
