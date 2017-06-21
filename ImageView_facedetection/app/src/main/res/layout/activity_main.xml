@@ -12,27 +12,13 @@
         android:layout_height="300dp"
         app:srcCompat="@android:color/background_light"
          />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="Eye Enlarge"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-<<<<<<< HEAD
-        android:layout_marginBottom="56dp"
-        android:text="TextView" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:text="Button" />
-=======
-        android:layout_marginBottom="38dp" />
-
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
+        android:text="Button"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="27dp" />
 </RelativeLayout>

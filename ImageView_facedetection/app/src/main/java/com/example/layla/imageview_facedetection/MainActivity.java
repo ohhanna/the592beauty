@@ -7,16 +7,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-<<<<<<< HEAD
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-=======
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
@@ -39,22 +29,11 @@ public class MainActivity extends AppCompatActivity {
     //Bitmap mBitmap;
     Matrix mMatrix = new Matrix();
     Matrix mInverse = new Matrix();
-<<<<<<< HEAD
-    Bitmap tempBitmap;
-    Canvas tempCanvas;
-    TextView textView;
-    int warpcount = 0;
-    int lefteyex = 0;
-    int lefteyey = 0;
-    int righteyex = 0;
-    int righteyey = 0;
-=======
 
     int warpcount = 0;
 
     Button button;
     ImageView imageView;
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
     Bitmap myBitmap;
 
     @Override
@@ -68,23 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.cc,
                 options);
 
-<<<<<<< HEAD
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        textView = (TextView) findViewById(R.id.textView);
-
-        //paint 색 지정
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5);
-
-        //임시로 쓸 비트맵과 캔버스 생성 : 캔버스에는 mybitmap을 넣음
-        tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
-        tempCanvas = new Canvas(tempBitmap);
-        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
-
-        Button button = (Button) findViewById(R.id.button);
-=======
         imageView = (ImageView) findViewById(R.id.imageView); // imgview
         imageView.setImageBitmap(myBitmap);
 
@@ -158,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
 
                 // 이미지뷰에 뭐 해주는 건데 일단 넣기
                 imageView.setImageDrawable(new BitmapDrawable(getResources(), tempBitmap));
@@ -178,50 +139,12 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(tempBitmap);
 
             }
-<<<<<<< HEAD
-        }
-        //mMatrix.setTranslate(10, 10);
-        mMatrix.invert(mInverse);
-
-        int landmark_count = 0;
-        //랜드마크 찾기
-        for (int i = 0; i < faces.size(); i++) {
-            Face face = faces.valueAt(i);
-            for (Landmark landmark : face.getLandmarks()) {
-                int cx = (int) (landmark.getPosition().x);
-                int cy = (int) (landmark.getPosition().y);
-                landmark_count++;
-
-                if (landmark_count == 1) {
-                    lefteyex = cx;
-                    lefteyey = cy;
-                }
-                if (landmark_count == 2) {
-                    righteyex = cx;
-                    righteyey = cy;
-                }
-
-            }
-        }
-=======
         });
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
 
 
-<<<<<<< HEAD
-//bb사진 : 왼쪽눈좌표(796, 321) / 오른쪽눈좌표 (933, 311)
-        tempCanvas.concat(mMatrix);
-        //왼쪽눈좌표
-        warp(lefteyex, lefteyey);
-        warpcount++;
-        tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-        warp(righteyex, righteyey);
-        warpcount++;
-        tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-=======
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
 
     }
+
     //warp함수 : pixelfluid
     void warp(float cx, float cy) {
         final float K = 15000;
@@ -242,21 +165,12 @@ public class MainActivity extends AppCompatActivity {
             float pull = K / (dd + 0.000001f); // pull : 밀어주는 정도의 느낌,,
             pull /= (d + 0.000001f);
 
-<<<<<<< HEAD
-            if (pull >= 2 ) {
+            if (pull >= 2.5 ) { // 거리가 ~보다 크면 이동x, 1.5보다 아래면 이동o // 거리를 우리가 적절하게 조정해야됨
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             } else
-                dst[i+0] = x-(int)1.5*dx*pull;
-                dst[i+1] = y-(int)1.5*dy*pull;
-=======
-            if (pull >= 1.0 ) { // 거리가 ~보다 크면 이동x, 1.5보다 아래면 이동o // 거리를 우리가 적절하게 조정해야됨
-                dst[i + 0] = cx;
-                dst[i + 1] = cy;
-            } else
-                dst[i+0] = x-1*dx*pull; // 숫자를 키우면 눈 커지는 게 커짐.. // 적절하게 숫자 조정해야됨 // -하면 눈이 커지고, +하면 눈이 작아짐 -> 갸름하게는 +하고 눈 키우는 거는 -로 해주기
-                dst[i+1] = y-1*dy*pull; // dst자체는 커지는 영역을 조정
->>>>>>> 52b3377403108f652f5e9700d2a57fec8a09ee47
+                dst[i+0] = x-(int)(0.8*dx*pull); // 숫자를 키우면 눈 커지는 게 커짐.. // 적절하게 숫자 조정해야됨 // -하면 눈이 커지고, +하면 눈이 작아짐 -> 갸름하게는 +하고 눈 키우는 거는 -로 해주기
+            dst[i+1] = y-(int)(0.8*dy*pull); // dst자체는 커지는 영역을 조정
         }
     }
 
