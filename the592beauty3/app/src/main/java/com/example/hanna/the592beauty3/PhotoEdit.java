@@ -77,9 +77,10 @@ public class PhotoEdit extends Activity {
             Intent intent = getIntent();
             photoPath = intent.getStringExtra("str");
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
+            // options.inSampleSize = 4;
             options.inMutable = true;
-            final Bitmap bmp = BitmapFactory.decodeFile(photoPath, options);
+            final Bitmap bmp;
+            bmp = BitmapFactory.decodeFile(photoPath, options);
 //            MyView m = new MyView(this);
 //            setContentView(m);
             imgview.setImageBitmap(bmp);
@@ -159,22 +160,13 @@ public class PhotoEdit extends Activity {
         btn_Eye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Paint paint = new Paint();
-                paint.setColor(Color.GREEN);
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(5);
-
                 Bitmap eyeBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
                 Canvas eyeCanvas = new Canvas(eyeBitmap);
                 eyeCanvas.drawBitmap(bitmap, 0, 0, null);
-
-                int h; // 높이
-                int w; // 너비
-
+                float h; // 높이
+                float w; // 너비
                 FaceDetector faceDetector = new
                         FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
-
                 Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                 SparseArray<Face> faces = faceDetector.detect(frame);
 
@@ -193,13 +185,10 @@ public class PhotoEdit extends Activity {
                     }
                 }
                 mMatrix.invert(mInverse);
-
                 // ↓눈찾기
                 int landmark_count = 0;
-
                 int lefteyex = 0;
                 int lefteyey = 0;
-
                 int righteyex = 0;
                 int righteyey = 0;
 
@@ -222,22 +211,17 @@ public class PhotoEdit extends Activity {
                 }
 
                 imgview.setImageDrawable(new BitmapDrawable(getResources(), eyeBitmap));
-
                 eyeCanvas.concat(mMatrix);
-
                 // warp _ 눈 키워주기
-                warp(lefteyex, lefteyey);
-                warpcount++;
+                eyewarp(lefteyex, lefteyey-5, w, h);
+                eyewarp(righteyex, righteyey-7, w, h);
                 eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-
-                warp(righteyex, righteyey);
-                warpcount++;
-                eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-
+                //    eyeCanvas.drawCircle(lefteyex, lefteyey, 5,paint);
                 imgview.setImageBitmap(eyeBitmap);
+
                 bitmap = eyeBitmap;
 
-                satBar.setVisibility(View.INVISIBLE);
+                //   satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -246,44 +230,6 @@ public class PhotoEdit extends Activity {
         btn_Chin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(new SampleView(PhotoEdit.this));
-//
-//                Bitmap chinBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
-//                Canvas chinCanvas = new Canvas(chinBitmap);
-//                chinCanvas.drawBitmap(bitmap, 0, 0, null);
-//
-//                int h = bitmap.getHeight();
-//                int w = bitmap.getWidth();
-//
-//                int index = 0;
-//                for (int y = 0; y <= HEIGHT; y++){
-//                    float fy = h * y / HEIGHT;
-//                    for (int x = 0; x <= WIDTH; x++){
-//                        float fx = w * x / WIDTH;
-//                        setXY(mVerts, index, fx, fy);
-//                        setXY(mOrig, index, fx, fy);
-//                        index += 1;
-//                    }
-//                }
-//
-//                mMatrix.invert(mInverse);
-//
-//                imgview.setImageDrawable(new BitmapDrawable(getResources(), chinBitmap));
-//                chinCanvas.concat(mMatrix);
-//                chinCanvas.drawBitmapMesh(chinBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
-//
-//
-//                setContentView(new chin_touch(PhotoEdit.this));
-//
-//
-//
-////                if(check_touch)
-////                    check_touch = false;
-////                else
-////                    check_touch = true;
-//
-//                imgview.setImageBitmap(chinBitmap);
-//                bitmap = chinBitmap;
                 satBar.setVisibility(View.INVISIBLE);
             }
         });
@@ -390,10 +336,9 @@ public class PhotoEdit extends Activity {
 
     }
 
-
     // eye _ warp 함수 : pixelfluid
-    void warp(float cx, float cy){
-        final float K = 15000;
+    void eyewarp(float cx, float cy, float w, float h){
+        final float K = 10000;
         float[] src = mOrig;
         float[] dst = mVerts;
 
@@ -411,15 +356,16 @@ public class PhotoEdit extends Activity {
             float pull = K / (dd + 0.000001f); // pull : 밀어주는 정도,,,
             pull /= (d + 0.000001f);
 
-            if( pull >= 1.0 ) {
+            if( pull >= 2.0 ) {
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             }
             else {
-                dst[i + 0] = x - (int)0.5 * dx * pull;
-                dst[i + 1] = y - (int)0.5 * dy * pull;
+                dst[i + 0] = x -(int)(w/5000*dx * pull);
+                dst[i + 1] = y -(int)(h/4000*dy * pull);
             }
         }
+        warpcount++;
     }
 
     // eye _ XY축 정하기 : pixelfluid // 축그리기
@@ -430,128 +376,6 @@ public class PhotoEdit extends Activity {
     }
 
 
-    // chin.....
-    private class SampleView extends View {
-
-        public SampleView(Context context) {
-            super(context);
-            setFocusable(true);
-
-            Bitmap chinBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
-            Canvas chinCanvas = new Canvas(chinBitmap);
-            chinCanvas.drawBitmap(bitmap, 0, 0, null);
-
-            float w = bitmap.getWidth();
-            float h = bitmap.getHeight();
-            // construct our mesh
-            int index = 0;
-            for (int y = 0; y <= HEIGHT; y++) {
-                float fy = h * y / HEIGHT;
-                for (int x = 0; x <= WIDTH; x++) {
-                    float fx = w * x / WIDTH;
-                    setXY(mVerts, index, fx, fy);
-                    setXY(mOrig, index, fx, fy);
-                    index += 1;
-                }
-            }
-
-            //mMatrix.setTranslate(10, 10);
-            mMatrix.invert(mInverse);
-
-            imgview.setImageDrawable(new BitmapDrawable(getResources(), chinBitmap));
-            //chinCanvas.concat(mMatrix);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            canvas.concat(mMatrix);
-            canvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0,
-                    null);
-        }
-        //지금이건 갸름하게효과!
-        private void warp_chin(float cx, float cy) {
-            final float K = 10000;
-            float[] src = mOrig;
-            float[] dst = mVerts;
-
-            if(warpcount!=0)
-                src = mVerts;
-
-            for (int i = 0; i < COUNT * 2; i += 2) {
-                float x = src[i + 0];
-                float y = src[i + 1];
-                float dx = cx - x;
-                float dy = cy - y;
-                float dd = dx * dx + dy * dy;
-                float d = (float)Math.sqrt(dd);
-                float pull = K / (dd + 0.00001f);
-
-                pull /= (d + 0.00001f);
-                // android.util.Log.d("skia", "index " + i + " dist=" + d +
-                // " pull=" + pull);
-
-                if (pull >= 1) {
-                    dst[i + 0] = cx;
-                    dst[i + 1] = cy;
-                } else {
-                    dst[i + 0] = x + (int) 0.3 * dx * pull;
-                    //dst[i + 0] = x - dx * pull; 로 쓰면 확대
-
-                    dst[i + 1] = y + (int) 0.3 * dy * pull;
-                    //dst[i + 1] = y - (int) 0.3 * dy * pull; 로 쓰면 확대
-
-                }
-            }
-            warpcount++;
-
-        }
-
-        private int mLastWarpX = -9999; // don't match a touch coordinate
-        private int mLastWarpY;
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            float[] pt = { event.getX(), event.getY() };
-            mInverse.mapPoints(pt);
-
-            int x = (int) pt[0];
-            int y = (int) pt[1];
-            if (mLastWarpX != x || mLastWarpY != y) {
-                mLastWarpX = x;
-                mLastWarpY = y;
-                warp_chin(pt[0], pt[1]);
-                invalidate();
-            }
-            return true;
-        }
-    }
-
-
-
-//    private class chin_touch extends View {
-//
-//        public chin_touch(Context context) {
-//            super(context);
-//        }
-//
-//        @Override
-//        public boolean onTouchEvent(MotionEvent event) {
-//
-//                float[] pt = {event.getX(), event.getY()};
-//                mInverse.mapPoints(pt);
-//
-//                int x = (int) pt[0];
-//                int y = (int) pt[1];
-//                if (mLastWarpX != x || mLastWarpY != y) {
-//                    mLastWarpX = x;
-//                    mLastWarpY = y;
-//                    warp(pt[0], pt[1]);
-//                    invalidate();
-//                }
-//                return true;
-//
-//        }
-//    }
 
     float[] matrix_sharpen =
             { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
