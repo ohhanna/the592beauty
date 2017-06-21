@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -13,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,19 +33,25 @@ public class MainActivity extends AppCompatActivity {
     Bitmap mBitmap;
     Matrix mMatrix = new Matrix();
     Matrix mInverse = new Matrix();
-
-    TextView textView ;
-
+    Bitmap tempBitmap;
+    Canvas tempCanvas;
+    TextView textView;
     int warpcount = 0;
+    int lefteyex = 0;
+    int lefteyey = 0;
+    int righteyex = 0;
+    int righteyey = 0;
+    Bitmap myBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
-        Bitmap myBitmap = BitmapFactory.decodeResource(
+        myBitmap = BitmapFactory.decodeResource(
                 getApplicationContext().getResources(),
-                R.drawable.bb,
+                R.drawable.cc,
                 options);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -56,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
 
         //임시로 쓸 비트맵과 캔버스 생성 : 캔버스에는 mybitmap을 넣음
-        Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
-        Canvas tempCanvas = new Canvas(tempBitmap);
-        tempCanvas.drawBitmap(myBitmap,0, 0, null);
+        tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
+        tempCanvas = new Canvas(tempBitmap);
+        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+
+        Button button = (Button) findViewById(R.id.button);
 
         int h;
         int w;
@@ -87,24 +97,18 @@ public class MainActivity extends AppCompatActivity {
 
         int landmark_count = 0;
         //랜드마크 찾기
-
-        int lefteyex = 0;
-        int lefteyey = 0;
-        int righteyex = 0;
-        int righteyey = 0;
-
-        for(int i=0; i<faces.size(); i++){
+        for (int i = 0; i < faces.size(); i++) {
             Face face = faces.valueAt(i);
-            for(Landmark landmark : face.getLandmarks()){
-                int cx = (int)(landmark.getPosition().x);
-                int cy = (int)(landmark.getPosition().y);
+            for (Landmark landmark : face.getLandmarks()) {
+                int cx = (int) (landmark.getPosition().x);
+                int cy = (int) (landmark.getPosition().y);
                 landmark_count++;
 
-                if(landmark_count==1 ) {
+                if (landmark_count == 1) {
                     lefteyex = cx;
                     lefteyey = cy;
                 }
-                if(landmark_count==2){
+                if (landmark_count == 2) {
                     righteyex = cx;
                     righteyey = cy;
                 }
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 //bb사진 : 왼쪽눈좌표(796, 321) / 오른쪽눈좌표 (933, 311)
         tempCanvas.concat(mMatrix);
         //왼쪽눈좌표
-        warp(lefteyex,lefteyey);
+        warp(lefteyex, lefteyey);
         warpcount++;
         tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
         warp(righteyex, righteyey);
@@ -125,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         tempCanvas.drawBitmapMesh(myBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
 
     }
-
     //warp함수 : pixelfluid
     void warp(float cx, float cy) {
         final float K = 15000;
@@ -146,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
             float pull = K / (dd + 0.000001f);
             pull /= (d + 0.000001f);
 
-            if (pull >= 1.5 ) {
+            if (pull >= 2 ) {
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             } else
-                dst[i+0] = x-2*dx*pull;
-                dst[i+1] = y-2*dy*pull;
+                dst[i+0] = x-(int)1.5*dx*pull;
+                dst[i+1] = y-(int)1.5*dy*pull;
         }
     }
 
