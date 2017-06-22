@@ -455,19 +455,29 @@ public class PhotoEdit extends Activity {
         }
     }
 
+    float oldintensity;
     // 밝기 함수 : 비트맵 _fin
     private void loadBitmapIntensity(){
         if(bitmap!=null){
             int progressIntensity = satBar.getProgress();
+
             float intensity;
 
             if(cnt_Intensity == 0)
-                intensity = (float)progressIntensity/256;
+                intensity = (float) progressIntensity / 256;
+
 
             else
-                intensity = (float)progressIntensity/8;
+                intensity = (float) progressIntensity / 8;
+
 
             cnt_Intensity++;
+
+            if(oldintensity>intensity) {
+                oldintensity = intensity;
+                intensity = -intensity;
+            }else
+                oldintensity = intensity;
 
             imgview.setImageBitmap(updateIntenstiy(bitmap, intensity));
         }
