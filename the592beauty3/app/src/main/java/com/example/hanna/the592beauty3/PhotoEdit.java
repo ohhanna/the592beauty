@@ -209,12 +209,13 @@ public class PhotoEdit extends Activity {
                         }
                     }
                 }
-
+                double calibration_left = h*5/800;
+                double calibration_right = h*7/800;
                 imgview.setImageDrawable(new BitmapDrawable(getResources(), eyeBitmap));
                 eyeCanvas.concat(mMatrix);
                 // warp _ 눈 키워주기
-                eyewarp(lefteyex, lefteyey-5, w, h);
-                eyewarp(righteyex, righteyey-7, w, h);
+                eyewarp(lefteyex-3, lefteyey-(int)calibration_left+1, w, h);
+                eyewarp(righteyex-3, righteyey-(int)calibration_right+1, w, h);
                 eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
                 //    eyeCanvas.drawCircle(lefteyex, lefteyey, 5,paint);
                 imgview.setImageBitmap(eyeBitmap);
@@ -356,7 +357,8 @@ public class PhotoEdit extends Activity {
             float pull = K / (dd + 0.000001f); // pull : 밀어주는 정도,,,
             pull /= (d + 0.000001f);
 
-            if( pull >= 2.0 ) {
+            double standard_push = h*w/240000;
+            if( pull >= standard_push ) {
                 dst[i + 0] = cx;
                 dst[i + 1] = cy;
             }
@@ -465,7 +467,6 @@ public class PhotoEdit extends Activity {
 
             if(cnt_Intensity == 0)
                 intensity = (float) progressIntensity / 256;
-
 
             else
                 intensity = (float) progressIntensity / 8;
