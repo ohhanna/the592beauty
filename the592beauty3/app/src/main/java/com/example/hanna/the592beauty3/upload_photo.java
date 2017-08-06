@@ -27,8 +27,11 @@ import com.google.android.gms.vision.face.FaceDetector;
 public class upload_photo extends Activity {
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
-    private static final int WARM = 1;
-    private static final int COOL = -1;
+    private static final int SPRING = 1;
+    private static final int SUMMER = 2;
+    private static final int AUTUMN = 3;
+    private static final int WINTER = 4;
+
     Bitmap photo;
     ColorWeight weight;
     int result;
@@ -94,12 +97,20 @@ public class upload_photo extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(result==COOL) {
-                    Intent intent = new Intent(getApplicationContext(), Winter.class);
+                if(result==SPRING) {
+                    Intent intent = new Intent(getApplicationContext(), Spring.class);
                     startActivity(intent);
                 }
-                else {
-                    Intent intent = new Intent(getApplicationContext(), Spring.class);
+                if(result==SUMMER) {
+                    Intent intent = new Intent(getApplicationContext(), Summer.class);
+                    startActivity(intent);
+                }
+                if(result==AUTUMN) {
+                    Intent intent = new Intent(getApplicationContext(), Autumn.class);
+                    startActivity(intent);
+                }
+                if(result==WINTER) {
+                    Intent intent = new Intent(getApplicationContext(), Winter.class);
                     startActivity(intent);
                 }
 
@@ -147,6 +158,7 @@ public class upload_photo extends Activity {
 
         int cool = weight.getCool();
         int warm = weight.getWarm();
+        int w = weight.getWeight();
 
         if(number == 3){
             cool = cool + 3;
@@ -159,10 +171,18 @@ public class upload_photo extends Activity {
             weight.setColor(cool, warm);
         }
 
-       if(cool>warm)
-           result = COOL;
-        else
-            result = WARM;
+       if(cool>warm) {
+           if (w > 0)
+                result = SUMMER;
+           else
+               result = WINTER;
+       }
+       if(warm>cool){
+           if(w > 0)
+               result = AUTUMN;
+           else
+               result = SPRING;
+       }
 
         // Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
         detector.release();

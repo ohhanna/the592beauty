@@ -29,8 +29,6 @@ public class PersonalColorQ9 extends Activity {
                 RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
 
                 ColorWeight weight = (ColorWeight) getApplicationContext();
-                int cool = weight.getCool();
-                int warm = weight.getWarm();
                 int w = weight.getWeight();
 
                 if(rg.getCheckedRadioButtonId() == -1) {
@@ -38,13 +36,12 @@ public class PersonalColorQ9 extends Activity {
                     return ;
                 }
 
-                String str_Qtype = rd.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
                 finish();
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q9_1:
                         weight.setTw(w);
-                        w= w-2;
+                        w= w-1;
                         weight.setWeight(w);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
@@ -53,7 +50,7 @@ public class PersonalColorQ9 extends Activity {
 
                     case R.id.radio_q9_2:
                         weight.setTw(w);
-                        w= w+2;
+                        w= w+1;
                         weight.setWeight(w);
                         weight.setTw(2);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();

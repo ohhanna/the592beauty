@@ -29,8 +29,6 @@ public class PersonalColorQ7 extends Activity {
                 RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
 
                 ColorWeight weight = (ColorWeight) getApplicationContext();
-                int cool = weight.getCool();
-                int warm = weight.getWarm();
                 int w = weight.getWeight();
 
                 if(rg.getCheckedRadioButtonId() == -1) {

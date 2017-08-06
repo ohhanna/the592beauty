@@ -57,7 +57,7 @@ public class PersonalColorQ4 extends Activity {
                         weight.setTemp(cool,warm);
                         cool = cool +1;
                         warm = warm +1;
-                        weight.setColor(cool, warm);
+                        weight.setColor(cool,warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
                         startActivity(intent);
@@ -67,7 +67,7 @@ public class PersonalColorQ4 extends Activity {
                         weight.setTemp(cool,warm);
                         cool = cool +2;
                         warm = warm -1;
-                        weight.setColor(cool, warm);
+                        weight.setColor(cool,warm);
                         Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
                         startActivity(intent);

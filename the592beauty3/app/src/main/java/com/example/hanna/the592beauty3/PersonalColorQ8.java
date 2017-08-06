@@ -29,22 +29,18 @@ public class PersonalColorQ8 extends Activity {
                 RadioButton rd = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
 
                 ColorWeight weight = (ColorWeight) getApplicationContext();
-                int cool = weight.getCool();
-                int warm = weight.getWarm();
                 int w = weight.getWeight();
 
                 if(rg.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
                     return ;
                 }
-
-                String str_Qtype = rd.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), PersonalColorQ9.class);
+Intent intent = new Intent(getApplicationContext(), PersonalColorQ9.class);
                 finish();
                 switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q8_1:
                         weight.setTw(w);
-                        w= w+1;
+                        w= w-2;
                         weight.setWeight(w);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
@@ -53,7 +49,7 @@ public class PersonalColorQ8 extends Activity {
 
                     case R.id.radio_q8_2:
                         weight.setTw(w);
-                        w= w-1;
+                        w= w+2;
                         weight.setWeight(w);
                         Toast.makeText(getApplicationContext(), "Weight:"+weight.getWeight(), Toast.LENGTH_SHORT).show();
                         weight.setBack(0);

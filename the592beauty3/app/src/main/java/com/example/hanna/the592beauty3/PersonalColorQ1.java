@@ -34,23 +34,20 @@ public class PersonalColorQ1 extends Activity {
                 int cool = weight.getCool();
                 int warm = weight.getWarm();
 
+
                 if(rg.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
                     return ;
                 }
 
-                String str_Qtype = rd.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), PersonalColorQ2.class);
-//                Intent intent = new Intent(getApplicationContext(), PersonalColorQ10.class);
-                //Intent intent = new Intent(getApplicationContext(), Spring.class);
-                finish();
-                switch(rg.getCheckedRadioButtonId()) {
+                   switch(rg.getCheckedRadioButtonId()) {
                     case R.id.radio_q1_1:
                         weight.setTemp(cool,warm);
                         cool = cool -1;
                         warm = warm +2;
                         weight.setColor(cool, warm);
-                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(),  Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
                         startActivity(intent);
                         break;
@@ -60,7 +57,7 @@ public class PersonalColorQ1 extends Activity {
                         cool = cool +2;
                         warm = warm -1;
                         weight.setColor(cool, warm);
-                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Cool:"+weight.getCool()+" Warm:"+weight.getWarm() ,  Toast.LENGTH_SHORT).show();
                         weight.setBack(0);
                         startActivity(intent);
                         break;
@@ -79,4 +76,3 @@ public class PersonalColorQ1 extends Activity {
         startActivity(intent);
     }
 }
-// Toast.makeText(getApplicationContext(), "선택하세요", Toast.LENGTH_SHORT).show();
