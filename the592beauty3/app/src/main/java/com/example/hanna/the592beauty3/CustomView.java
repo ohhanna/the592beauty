@@ -145,7 +145,7 @@ public class CustomView extends View{
                     leftcheekblue= Color.blue(pixel);
                 }
 
-                if(count == 4) {
+                if(count == 5) {
                     canvas.drawCircle(cx, cy, 10, paint);
                     int pixel = mBitmap.getPixel((int)landmark.getPosition().x, (int)landmark.getPosition().y);
                     rightcheekred = Color.red(pixel);
@@ -155,17 +155,6 @@ public class CustomView extends View{
 
                 else
                     canvas.drawCircle(cx, cy, 10, paint);
-
-                ////////////5.16///////////////////////////////////////////////////////////////////////////
-/*
-
-                textView.setText(Integer.toString(lefteyeRed) + " + " + Integer.toString(lefteyeGreen) + " + " + Integer.toString(lefteyeBlue)+"\n"
-                        + Integer.toString(righteyered) + " + " + Integer.toString(righteyegreen) + " + " + Integer.toString(righteyeblue)+"\n"
-                        + Integer.toString(leftcheekred) + " + " + Integer.toString(leftcheekgreen) + " + " + Integer.toString(leftcheekblue)+"\n"
-                        + Integer.toString(rightcheekred) + " + " + Integer.toString(rightcheekgreen) + " + " + Integer.toString(rightcheekblue));
-*/
-
-
 
             }
         }

@@ -231,7 +231,67 @@ public class PhotoEdit extends Activity {
         btn_Chin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                satBar.setVisibility(View.INVISIBLE);
+                Bitmap eyeBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
+                Canvas eyeCanvas = new Canvas(eyeBitmap);
+                eyeCanvas.drawBitmap(bitmap, 0, 0, null);
+                float h; // 높이
+                float w; // 너비
+                FaceDetector faceDetector = new
+                        FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).setLandmarkType(FaceDetector.ALL_LANDMARKS).build();
+                Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                SparseArray<Face> faces = faceDetector.detect(frame);
+
+                h = bitmap.getHeight();
+                w = bitmap.getWidth();
+
+                // MeshGrid , 그물 쳐주기
+                int index = 0;
+                for (int y = 0; y <= HEIGHT; y++){
+                    float fy = h * y / HEIGHT;
+                    for (int x = 0; x <= WIDTH; x++){
+                        float fx = w * x / WIDTH;
+                        setXY(mVerts, index, fx, fy); // 밑에 함수
+                        setXY(mOrig, index, fx, fy);
+                        index += 1;
+                    }
+                }
+                mMatrix.invert(mInverse);
+                // ↓코찾기
+                int landmark_count = 0;
+                int nosex=0;
+                int nosey=0;
+                int cheekx = 0;
+                int cheeky = 0;
+
+                for (int i = 0; i<faces.size(); i++){
+                    Face face = faces.valueAt(i);
+                    for(Landmark landmark : face.getLandmarks()){
+                        int cx = (int)(landmark.getPosition().x);
+                        int cy = (int)(landmark.getPosition().y);
+                        landmark_count++;
+
+                        if(landmark_count == 3) {
+                            nosex = cx;
+                            nosey = cy;
+                           }
+
+                        if(landmark_count==4) {
+                            cheekx = cx;
+                            cheeky = cy;
+                        }
+
+                    }
+                }
+
+                imgview.setImageDrawable(new BitmapDrawable(getResources(), eyeBitmap));
+                eyeCanvas.concat(mMatrix);
+                // warp _ 갸름하게
+                thinwarp(cheekx, cheeky,  nosex, nosey, w, h);
+                eyeCanvas.drawBitmapMesh(bitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+                //    eyeCanvas.drawCircle(lefteyex, lefteyey, 5,paint);
+                imgview.setImageBitmap(eyeBitmap);
+                bitmap = eyeBitmap;
+                //   satBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -327,18 +387,14 @@ public class PhotoEdit extends Activity {
                 Bitmap bitmapSharpen = createBitmap_convolve(bitmap, matrix_sharpen);
                 imgview.setImageBitmap(bitmapSharpen);
                 bitmap = bitmapSharpen;
-//                satBar.setOnSeekBarChangeListener(seekBarChangeListener2);
-//                satBar.setProgress(256);
-//                cnt_Intensity = 0;
-//                loadBitmapSharpen();
-//                satBar.setVisibility(View.VISIBLE);
-            }
+           }
         });
 
     }
 
     // eye _ warp 함수 : pixelfluid
     void eyewarp(float cx, float cy, float w, float h){
+
         final float K = 10000;
         float[] src = mOrig;
         float[] dst = mVerts;
@@ -369,6 +425,51 @@ public class PhotoEdit extends Activity {
         }
         warpcount++;
     }
+
+
+    void thinwarp(float cheekx, float cheeky, float cx, float cy, float w, float h){
+        final float K = 10000;
+        float[] src = mOrig;
+        float[] dst = mVerts;
+
+        if(warpcount != 0){
+            src = mVerts;
+        }
+
+        float distancex = cheekx - cx;
+
+// kim 사진 기준 : 코 축소할때는 pull이 10, w/500*dx*pull이 적절
+        for(int i = 0; i < COUNT * 2; i += 2){
+            float x = src[i+0];
+            float y = src[i+1];
+            float dx = cx - x;
+            float dy = cy - y;
+            float dd = dx*dx + dy*dy;
+            float d = (float)Math.sqrt(dd);
+            float pull = K / (dd + 0.000001f); // pull : 밀어주는 정도,,,
+            pull /= (d + 0.000001f);
+
+            double standard_push = h*w/240000;
+
+            if( d <= 1.2 * distancex || d >= 1.9 * distancex) {
+                dst[i + 0] = x;
+                dst[i + 1] = y;
+            }
+            else {
+                if (dx > 0 && dy < 0.75*distancex) {
+                    dst[i + 0] = x + 2;
+                    dst[i + 1] = y-1;
+
+                }
+                else if(dx < 0 && dy < 0.75 * distancex){
+                    dst[i+0] = x - 2;
+                    dst[i+1] = y-1;
+                }
+            }
+        }
+        warpcount++;
+    }
+
 
     // eye _ XY축 정하기 : pixelfluid // 축그리기
     // chin _ XY축 정하기 : pixelfluid // 축그리기
