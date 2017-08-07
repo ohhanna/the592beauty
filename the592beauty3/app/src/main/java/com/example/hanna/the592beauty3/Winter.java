@@ -26,9 +26,10 @@ public class Winter extends Activity {
             @Override
 
             public void onClick(View view){
-
-                //Intent intent = new Intent(getApplicationContext(), PersonalColorQ1.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(intent);
             }
         });
     }
