@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import android.media.effect.EffectFactory;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
     SurfaceHolder surfaceHolder;
     ImageButton button_c;
     ImageButton button_switch;
+    ImageButton button_beauty;
     String str;
     Uri imageUri;
     Camera.PictureCallback jpegCallback;
@@ -36,6 +39,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        button_beauty = (ImageButton) findViewById(R.id.beauty);
         button_switch = (ImageButton) findViewById(R.id.switchb);
         button_switch.setOnClickListener(new View.OnClickListener() {
             @Override
