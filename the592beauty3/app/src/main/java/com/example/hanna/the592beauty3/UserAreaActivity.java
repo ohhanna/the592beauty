@@ -60,12 +60,12 @@ public class UserAreaActivity extends Activity {
         etID.setText(weight.getId());
         ImageRequest imageRequest1, imageRequest2;
 
-//        switch (weight.getUsername()) {
-//            case "봄": weight.setTone("spring"); break;
-//            case "여름": weight.setTone("summer"); break;
-//            case "가을": weight.setTone("autumn"); break;
-//            case "겨울": weight.setTone("winter"); break;
-//        }
+        switch (weight.getUsername()) {
+            case "봄": weight.setTone("spring"); break;
+            case "여름": weight.setTone("summer"); break;
+            case "가을": weight.setTone("autumn"); break;
+            case "겨울": weight.setTone("winter"); break;
+        }
 
         if (weight.getTone() == null) {
             imageRequest1 = new ImageRequest(null_URL1,
